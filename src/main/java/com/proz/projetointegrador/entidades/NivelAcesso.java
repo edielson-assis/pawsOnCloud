@@ -1,4 +1,4 @@
-package com.proz.projetointegrador.entities;
+package com.proz.projetointegrador.entidades;
 
 import java.io.Serializable;
 import java.util.HashSet;
