@@ -3,6 +3,7 @@ package com.proz.projetointegrador.entidades;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class Usuario implements Serializable {
     private String cpf;
     private String telefone;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
