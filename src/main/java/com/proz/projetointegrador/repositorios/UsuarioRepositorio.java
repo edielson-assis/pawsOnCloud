@@ -6,4 +6,6 @@ import com.proz.projetointegrador.entidades.Usuario;
 
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
     
+    boolean existsByEmail(String email);
+    boolean existsByCpf(String cpf);
 }

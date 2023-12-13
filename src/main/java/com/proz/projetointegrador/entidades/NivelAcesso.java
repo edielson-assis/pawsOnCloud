@@ -12,14 +12,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Table(name = "nivel_acesso")

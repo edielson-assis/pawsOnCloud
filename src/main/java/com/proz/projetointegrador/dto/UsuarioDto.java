@@ -28,7 +28,7 @@ public record UsuarioDto(
 
         @NotNull(message = "{data.obrigatorio}")
         @Past(message = "Data '${validatedValue}' é inválida!")
-        LocalDate dataDeNascimento,
+        LocalDate dataNascimento,
 
         @NotBlank(message = "{cpf.obrigatorio}")
         @CPF(message = "'${validatedValue}' é inválido!")

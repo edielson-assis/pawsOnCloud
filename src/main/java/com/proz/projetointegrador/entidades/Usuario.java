@@ -3,6 +3,8 @@ package com.proz.projetointegrador.entidades;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,8 @@ public class Usuario implements Serializable {
     private String nome;
     private String email;
     private String senha;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataNascimento;
     private String cpf;
     private String telefone;
