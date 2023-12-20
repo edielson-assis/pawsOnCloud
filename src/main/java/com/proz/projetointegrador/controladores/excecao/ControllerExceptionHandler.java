@@ -3,6 +3,7 @@ package com.proz.projetointegrador.controladores.excecao;
 import java.nio.file.AccessDeniedException;
 import java.time.Instant;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.proz.projetointegrador.servicos.excecoes.DataBaseException;
 import com.proz.projetointegrador.servicos.excecoes.ObjectNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,6 +49,13 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<StandardError> databaseError(Exception e, HttpServletRequest request) {
+        String error = "Erro no servidor";
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        return ResponseEntity.status(status).body(errors(status, error, e, request));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> databaseError(DataBaseException e, HttpServletRequest request) {
         String error = "Erro no servidor";
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(status).body(errors(status, error, e, request));

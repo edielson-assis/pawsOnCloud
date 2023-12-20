@@ -15,11 +15,9 @@ import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Table(name = "nivel_acesso")
@@ -32,4 +30,8 @@ public class NivelAcesso implements Serializable {
     @Transient
     @OneToMany(mappedBy = "id_nivel_acesso", fetch = FetchType.LAZY)
     private final Set<Usuario> usuarios = new HashSet<>();
+
+    public NivelAcesso(Long id) {
+        this.id = id;
+    }
 }

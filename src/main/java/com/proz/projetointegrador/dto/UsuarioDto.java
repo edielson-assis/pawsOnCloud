@@ -4,8 +4,6 @@ import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.proz.projetointegrador.entidades.Endereco;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -38,6 +36,6 @@ public record UsuarioDto(
         String telefone,
 
         @Valid
-        Endereco endereco) {
+        EnderecoDto enderecoDto) {
 
 }

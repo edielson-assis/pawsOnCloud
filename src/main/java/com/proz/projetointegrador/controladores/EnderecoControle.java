@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.proz.projetointegrador.dto.EnderecoDto;
 import com.proz.projetointegrador.dto.EnderecoRespDto;
+import com.proz.projetointegrador.dto.EnderecoUpdateDto;
 import com.proz.projetointegrador.entidades.Endereco;
 import com.proz.projetointegrador.servicos.EnderecoServico;
 
@@ -39,5 +41,12 @@ public class EnderecoControle {
     public ResponseEntity<EnderecoRespDto> findById(@PathVariable Long id) {
         Endereco endereco = servico.findById(id);
         return ResponseEntity.ok().body(new EnderecoRespDto(endereco));
+    }
+
+    @Transactional
+    @PutMapping(value = "/{id}") 
+    public ResponseEntity<Void> update(@Valid @PathVariable Long id, @RequestBody EnderecoUpdateDto enderecoUpdateDto) {
+        servico.update(id, enderecoUpdateDto);
+        return ResponseEntity.noContent().build();
     }
 }
