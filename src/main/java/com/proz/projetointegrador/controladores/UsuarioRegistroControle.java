@@ -61,7 +61,7 @@ public class UsuarioRegistroControle {
 
     @Transactional
     @PutMapping(value = "/{id}") 
-    public ResponseEntity<Void> update(@Valid @PathVariable Long id, @RequestBody UsuarioUpdateDto usuarioDto) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateDto usuarioDto) {
         servico.update(id, usuarioDto);
         return ResponseEntity.noContent().build();
     }

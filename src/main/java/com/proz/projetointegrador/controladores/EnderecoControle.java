@@ -45,7 +45,7 @@ public class EnderecoControle {
 
     @Transactional
     @PutMapping(value = "/{id}") 
-    public ResponseEntity<Void> update(@Valid @PathVariable Long id, @RequestBody EnderecoUpdateDto enderecoUpdateDto) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody EnderecoUpdateDto enderecoUpdateDto) {
         servico.update(id, enderecoUpdateDto);
         return ResponseEntity.noContent().build();
     }

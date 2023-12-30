@@ -40,7 +40,7 @@ public class EnderecoServicoImpl implements EnderecoServico {
     private Endereco updateData(Long id, EnderecoUpdateDto enderecoUpdateDto) {
         Endereco endereo = findById(id);
         endereo.setLogradouro(enderecoUpdateDto.logradouro());
-        if (enderecoUpdateDto.complemento() != null) {
+        if (!enderecoUpdateDto.complemento().isBlank()) {
             endereo.setComplemento(enderecoUpdateDto.complemento());
         }
         endereo.setCidade(enderecoUpdateDto.cidade());
