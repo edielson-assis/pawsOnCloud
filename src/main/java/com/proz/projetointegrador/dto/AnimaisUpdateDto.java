@@ -1,6 +1,5 @@
 package com.proz.projetointegrador.dto;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -31,9 +30,5 @@ public record AnimaisUpdateDto(
     Double peso,
 
     @NotBlank(message = "{campo.obrigatorio}")
-    String imgUrl,
-
-    @Valid
-    UsuarioUpdateDto usuarioUpdateDto) {
-    
+    String imgUrl) {
 }

@@ -36,6 +36,24 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
     }
 
     @Override
+    public Page<UsuarioRespDto> findAll(Pageable pageable) {
+        Page<Usuario> usuarios = repositorio.findAll(pageable);
+        return usuarios.map(UsuarioRespDto::new);
+    }
+
+    @Override
+    public Usuario findById(Long id) {
+        Optional<Usuario> usuario = repositorio.findById(id);
+        return usuario.orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado. Id inválido: " + id));
+    }
+
+    @Override
+    public Usuario update(Long id, UsuarioUpdateDto usuarioUpdateDto) {
+        Usuario usuario = updateData(id, usuarioUpdateDto);
+        return repositorio.save(usuario);
+    }
+
+    @Override
     public void delete(Long id) {
         try {
             repositorio.deleteById(id);
@@ -56,24 +74,6 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
         if (existeCpf) {
             throw new ValidationException("CPF já cadastrado");
         }
-    }
-
-    @Override
-    public Page<UsuarioRespDto> findAll(Pageable pageable) {
-        Page<Usuario> usuarios = repositorio.findAll(pageable);
-        return usuarios.map(UsuarioRespDto::new);
-    }
-
-    @Override
-    public Usuario findById(Long id) {
-        Optional<Usuario> usuario = repositorio.findById(id);
-        return usuario.orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado. Id inválido: " + id));
-    }
-
-    @Override
-    public Usuario update(Long id, UsuarioUpdateDto usuarioUpdateDto) {
-        Usuario usuario = updateData(id, usuarioUpdateDto);
-        return repositorio.save(usuario);
     }
 
     private Usuario updateData(Long id, UsuarioUpdateDto usuarioUpdateDto) {

@@ -31,6 +31,5 @@ public record AnimaisDto(
     String imgUrl,
 
     @Valid
-    UsuarioDto usuarioDto) {
-    
+    UsuarioDto usuarioDto) {    
 }
