@@ -12,8 +12,8 @@ import com.proz.projetointegrador.dto.UsuarioRespDto;
 import com.proz.projetointegrador.dto.UsuarioUpdateDto;
 import com.proz.projetointegrador.entidades.Usuario;
 import com.proz.projetointegrador.repositorios.UsuarioRepositorio;
-import com.proz.projetointegrador.servicos.EnderecoServico;
 import com.proz.projetointegrador.servicos.UsuarioRegistroServico;
+import com.proz.projetointegrador.servicos.conversor.DadosUsuario;
 import com.proz.projetointegrador.servicos.excecoes.DataBaseException;
 import com.proz.projetointegrador.servicos.excecoes.ObjectNotFoundException;
 
@@ -25,11 +25,10 @@ import lombok.AllArgsConstructor;
 public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
 
     private UsuarioRepositorio repositorio;
-    private EnderecoServico enderecoServico;
 
     @Override
     public Usuario create(UsuarioDto usuarioDto) {
-        Usuario usuario = new Usuario(usuarioDto);
+        Usuario usuario = DadosUsuario.getUsuario(usuarioDto);
         existsByEmail(usuario);
         existsByCpf(usuario);
         return repositorio.save(usuario);
@@ -49,7 +48,8 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
 
     @Override
     public Usuario update(Long id, UsuarioUpdateDto usuarioUpdateDto) {
-        Usuario usuario = updateData(id, usuarioUpdateDto);
+        Usuario usuario = findById(id);
+        DadosUsuario.getUsuarioAtualizado(usuario, usuarioUpdateDto);
         return repositorio.save(usuario);
     }
 
@@ -74,15 +74,5 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
         if (existeCpf) {
             throw new ValidationException("CPF já cadastrado");
         }
-    }
-
-    private Usuario updateData(Long id, UsuarioUpdateDto usuarioUpdateDto) {
-        Usuario usuario = findById(id); 
-        usuario.setNome(usuarioUpdateDto.nome());
-        usuario.setEmail(usuarioUpdateDto.email());
-        usuario.setSenha(usuarioUpdateDto.senha());
-        usuario.setTelefone(usuarioUpdateDto.telefone());
-        usuario.setEndereco(enderecoServico.update(id, usuarioUpdateDto.enderecoUpdateDto()));     
-        return usuario;
     }
 }

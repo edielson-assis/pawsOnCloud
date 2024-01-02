@@ -9,6 +9,7 @@ import com.proz.projetointegrador.dto.EnderecoUpdateDto;
 import com.proz.projetointegrador.entidades.Endereco;
 import com.proz.projetointegrador.repositorios.EnderecoRepositorio;
 import com.proz.projetointegrador.servicos.EnderecoServico;
+import com.proz.projetointegrador.servicos.conversor.DadosEndereco;
 import com.proz.projetointegrador.servicos.excecoes.ObjectNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class EnderecoServicoImpl implements EnderecoServico {
 
     @Override
     public Endereco create(EnderecoDto enderecoDto) {
-        Endereco endereco = new Endereco(enderecoDto);
+        Endereco endereco = DadosEndereco.getEndereco(enderecoDto);
         return repositorio.save(endereco);
     }
 
@@ -33,18 +34,8 @@ public class EnderecoServicoImpl implements EnderecoServico {
 
     @Override
     public Endereco update(Long id, EnderecoUpdateDto enderecoUpdateDto) {
-        Endereco endereco = updateData(id, enderecoUpdateDto);
+        Endereco endereco = findById(id);
+        DadosEndereco.getEnderecoAtualizado(endereco, enderecoUpdateDto);
         return repositorio.save(endereco);
-    }
-
-    private Endereco updateData(Long id, EnderecoUpdateDto enderecoUpdateDto) {
-        Endereco endereo = findById(id);
-        endereo.setLogradouro(enderecoUpdateDto.logradouro());
-        if (!enderecoUpdateDto.complemento().isBlank()) {
-            endereo.setComplemento(enderecoUpdateDto.complemento());
-        }
-        endereo.setCidade(enderecoUpdateDto.cidade());
-        endereo.setEstado(enderecoUpdateDto.estado());
-        return endereo;
     }
 }

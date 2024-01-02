@@ -13,6 +13,7 @@ import com.proz.projetointegrador.dto.AnimaisUpdateDto;
 import com.proz.projetointegrador.entidades.Animais;
 import com.proz.projetointegrador.repositorios.AnimaisRepositorio;
 import com.proz.projetointegrador.servicos.AnimaisServico;
+import com.proz.projetointegrador.servicos.conversor.DadosAnimais;
 import com.proz.projetointegrador.servicos.excecoes.DataBaseException;
 import com.proz.projetointegrador.servicos.excecoes.ObjectNotFoundException;
 
@@ -26,7 +27,7 @@ public class AnimaisServicoImpl implements AnimaisServico {
 
     @Override
     public Animais create(AnimaisDto animaisDto) {
-        Animais pet = new Animais(animaisDto);
+        Animais pet = DadosAnimais.getAnimais(animaisDto);
         return repositorio.save(pet);
     }
 
@@ -45,7 +46,7 @@ public class AnimaisServicoImpl implements AnimaisServico {
     @Override
     public Animais update(Long id, AnimaisUpdateDto petDto) {
         Animais pet = findById(id);
-        updateData(pet, petDto);
+        DadosAnimais.getPetAtualizado(pet, petDto);
         return repositorio.save(pet);
     }
 
@@ -56,15 +57,5 @@ public class AnimaisServicoImpl implements AnimaisServico {
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException(e.getMessage());
         }
-    }
-
-    private void updateData(Animais pet, AnimaisUpdateDto petDto) {
-        pet.setNome(petDto.nome());
-        pet.setPorte(petDto.porte());
-        pet.setIdade(petDto.idade());
-        pet.setEspecie(petDto.especie());
-        pet.setPelagem(petDto.pelagem());
-        pet.setPeso(petDto.peso());
-        pet.setImgUrl(petDto.imgUrl());
-    }    
+    }  
 }

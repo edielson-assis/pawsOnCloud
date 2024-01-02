@@ -2,7 +2,6 @@ package com.proz.projetointegrador.entidades;
 
 import java.io.Serializable;
 
-import com.proz.projetointegrador.dto.AnimaisDto;
 import com.proz.projetointegrador.entidades.enums.StatusAdocao;
 
 import jakarta.persistence.Column;
@@ -14,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +22,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Animais implements Serializable {
@@ -55,17 +56,5 @@ public class Animais implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
-
-    public Animais(AnimaisDto animaisDto) {
-        this.nome = animaisDto.nome();
-        this.porte = animaisDto.porte();
-        this.idade = animaisDto.idade();
-        this.especie = animaisDto.especie();
-        this.pelagem = animaisDto.pelagem();
-        this.peso = animaisDto.peso();
-        this.imgUrl = animaisDto.imgUrl();
-        this.status = StatusAdocao.DISPONIVEL;
-        this.usuario = new Usuario(animaisDto.usuarioDto());
-    }    
+    private Usuario usuario; 
 }

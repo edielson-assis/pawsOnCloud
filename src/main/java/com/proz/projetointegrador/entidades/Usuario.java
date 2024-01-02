@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.proz.projetointegrador.dto.UsuarioDto;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +18,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +27,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Usuario implements Serializable {
@@ -68,15 +68,4 @@ public class Usuario implements Serializable {
     @Transient
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private final List<Animais> animaisTutorado = new ArrayList<>();
-
-    public Usuario(UsuarioDto usuarioDto) {
-        this.nome = usuarioDto.nome();
-        this.email = usuarioDto.email();
-        this.senha = usuarioDto.senha();
-        this.dataNascimento = usuarioDto.dataNascimento();
-        this.cpf = usuarioDto.cpf();
-        this.telefone = usuarioDto.telefone();
-        this.endereco = new Endereco(usuarioDto.enderecoDto());
-        this.nivelAcesso = new NivelAcesso(1L);
-    }
 }

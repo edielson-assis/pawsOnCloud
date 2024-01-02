@@ -31,7 +31,7 @@ public class NivelAcesso implements Serializable {
     @OneToMany(mappedBy = "id_nivel_acesso", fetch = FetchType.LAZY)
     private final Set<Usuario> usuarios = new HashSet<>();
 
-    public NivelAcesso(Long id) {
+    public NivelAcesso(long id) {
         this.id = id;
     }
 }
