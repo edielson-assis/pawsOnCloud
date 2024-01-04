@@ -15,7 +15,6 @@ public record AnimaisDto(
     String porte,
 
     @NotNull(message = "{campo.obrigatorio}")
-    @Pattern(regexp = "^\\d+$", message = "{campo.numeros}")
     Integer idade,
 
     @NotBlank(message = "{campo.obrigatorio}")
@@ -24,7 +23,6 @@ public record AnimaisDto(
     String pelagem,
 
     @NotNull(message = "{campo.obrigatorio}")
-    @Pattern(regexp = "^\\d+(\\.\\d+)?$", message = "{campo.numeros}")
     Double peso,
 
     @NotBlank(message = "{campo.obrigatorio}")

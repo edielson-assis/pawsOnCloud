@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.proz.projetointegrador.dto.UsuarioDto;
-import com.proz.projetointegrador.dto.UsuarioRespDto;
-import com.proz.projetointegrador.dto.UsuarioUpdateDto;
-import com.proz.projetointegrador.entidades.Usuario;
-import com.proz.projetointegrador.servicos.UsuarioRegistroServico;
+import com.proz.projetointegrador.dto.AnimaisDto;
+import com.proz.projetointegrador.dto.AnimaisRespDto;
+import com.proz.projetointegrador.dto.AnimaisUpdateDto;
+import com.proz.projetointegrador.entidades.Animais;
+import com.proz.projetointegrador.servicos.AnimaisServico;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -28,35 +28,35 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/usuario/cadastro")
-public class UsuarioRegistroControle {
+@RequestMapping("/animais")
+public class AnimaisControle {
     
-    private UsuarioRegistroServico servico;
+    private AnimaisServico servico;
     
     @Transactional
     @PostMapping
-    public ResponseEntity<Usuario> create(@Valid @RequestBody UsuarioDto usuarioDto) {
-        Usuario usuario = servico.create(usuarioDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(usuario.getId()).toUri();
+    public ResponseEntity<Animais> create(@Valid @RequestBody AnimaisDto petDto) {
+        Animais pet = servico.create(petDto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(pet.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioRespDto>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
+    public ResponseEntity<Page<AnimaisRespDto>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
         var page = servico.findAll(pageable);
         return ResponseEntity.ok().body(page);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UsuarioRespDto> findById(@PathVariable Long id) {
-        Usuario usuario = servico.findById(id);
-        return ResponseEntity.ok().body(new UsuarioRespDto(usuario));
+    public ResponseEntity<AnimaisRespDto> findById(@PathVariable Long id) {
+        Animais pet = servico.findById(id);
+        return ResponseEntity.ok().body(new AnimaisRespDto(pet));
     }
 
     @Transactional
     @PutMapping(value = "/{id}") 
-    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateDto usuarioDto) {
-        servico.update(id, usuarioDto);
+    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody AnimaisUpdateDto petDto) {
+        servico.update(id, petDto);
         return ResponseEntity.noContent().build();
     }
 

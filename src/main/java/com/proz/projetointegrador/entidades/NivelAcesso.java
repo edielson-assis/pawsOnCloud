@@ -13,10 +13,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 @Entity
-@Getter
 @EqualsAndHashCode(of = "id")
 @Table(name = "nivel_acesso")
 public class NivelAcesso implements Serializable {
@@ -30,6 +28,8 @@ public class NivelAcesso implements Serializable {
     @Transient
     @OneToMany(mappedBy = "id_nivel_acesso", fetch = FetchType.LAZY)
     private final Set<Usuario> usuarios = new HashSet<>();
+
+    private NivelAcesso(){}
 
     private NivelAcesso(long id, String nome) {
         this.id = id;
