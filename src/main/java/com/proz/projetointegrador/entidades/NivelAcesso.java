@@ -14,14 +14,14 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Table(name = "nivel_acesso")
 public class NivelAcesso implements Serializable {
+
+    private static final NivelAcesso INSTANCE = new NivelAcesso(1L, "ROLE_USER");
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,12 @@ public class NivelAcesso implements Serializable {
     @OneToMany(mappedBy = "id_nivel_acesso", fetch = FetchType.LAZY)
     private final Set<Usuario> usuarios = new HashSet<>();
 
-    public NivelAcesso(long id) {
+    private NivelAcesso(long id, String nome) {
         this.id = id;
+        this.nome = nome;
+    }
+
+    public static NivelAcesso getInstance() {
+        return INSTANCE;
     }
 }

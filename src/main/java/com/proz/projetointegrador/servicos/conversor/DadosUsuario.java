@@ -15,7 +15,7 @@ public class DadosUsuario {
         usuarioDto.cpf(),
         usuarioDto.telefone(),
         DadosEndereco.getEndereco(usuarioDto.enderecoDto()),
-        new NivelAcesso(1L));
+        NivelAcesso.getInstance());
     }
 
     public static Usuario getUsuario(UsuarioDto usuarioDto) {
