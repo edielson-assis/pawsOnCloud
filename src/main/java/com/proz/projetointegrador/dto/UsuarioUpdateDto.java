@@ -16,7 +16,7 @@ public record UsuarioUpdateDto(
     @Size(min = 3, message = "'${validatedValue}' precisa ter, pelo menos, {min} caracteres.")
     String nome,
 
-    @NotBlank(message = "{password.obrigatorio}")
+    @NotBlank(message = "{senha.obrigatorio}")
     String senha,
 
     @NotBlank(message = "{telefone.obrigatorio}")
@@ -24,5 +24,5 @@ public record UsuarioUpdateDto(
     String telefone,
 
     @Valid
-    EnderecoUpdateDto enderecoUpdateDto) {
+    EnderecoUpdateDto endereco) {
 }

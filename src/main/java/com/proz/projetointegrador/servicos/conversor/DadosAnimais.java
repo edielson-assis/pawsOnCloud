@@ -1,8 +1,12 @@
 package com.proz.projetointegrador.servicos.conversor;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.proz.projetointegrador.dto.AnimaisDto;
 import com.proz.projetointegrador.dto.AnimaisUpdateDto;
 import com.proz.projetointegrador.entidades.Animais;
+import com.proz.projetointegrador.entidades.Usuario;
 import com.proz.projetointegrador.entidades.enums.StatusAdocao;
 
 public class DadosAnimais {
@@ -16,7 +20,7 @@ public class DadosAnimais {
         animaisDto.peso(),
         animaisDto.imgUrl(),
         StatusAdocao.DISPONIVEL,
-        DadosUsuario.getUsuario(animaisDto.usuarioDto()));
+        usuarioAutenticado());
     }
 
     public static Animais getAnimais(AnimaisDto animaisDto) {
@@ -35,5 +39,10 @@ public class DadosAnimais {
 
     public static void getPetAtualizado(Animais pet, AnimaisUpdateDto petDto) {
         updateData(pet, petDto);
+    }
+
+    private static Usuario usuarioAutenticado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (Usuario) authentication.getPrincipal();
     }
 }

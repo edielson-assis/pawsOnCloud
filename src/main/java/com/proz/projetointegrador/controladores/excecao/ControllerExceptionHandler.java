@@ -7,10 +7,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.proz.projetointegrador.seguranca.excecoes.ValidationException;
 import com.proz.projetointegrador.servicos.excecoes.DataBaseException;
 import com.proz.projetointegrador.servicos.excecoes.ObjectNotFoundException;
 
@@ -37,6 +40,27 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> badRequest(HttpMessageNotReadableException e, HttpServletRequest request) {
         String error = "Solicitação inválida";
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(errors(status, error, e, request));
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<StandardError> businessException(ValidationException e, HttpServletRequest request) {
+        String error = "Erro na validação";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(errors(status, error, e, request));
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<StandardError> badCredentialsError(BadCredentialsException e, HttpServletRequest request) {
+        String error = "Credenciais inválidas";
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        return ResponseEntity.status(status).body(errors(status, error, e, request));
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<StandardError> authenticationError(AuthenticationException e, HttpServletRequest request) {
+        String error = "Falha na autenticação";
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         return ResponseEntity.status(status).body(errors(status, error, e, request));
     }
 

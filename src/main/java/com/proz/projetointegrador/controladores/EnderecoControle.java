@@ -3,6 +3,7 @@ package com.proz.projetointegrador.controladores;
 import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/enderecos")
+@PreAuthorize("hasRole('ADMIN')")
 public class EnderecoControle {
     
     private EnderecoServico servico;

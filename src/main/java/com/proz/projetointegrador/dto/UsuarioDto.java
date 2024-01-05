@@ -23,7 +23,7 @@ public record UsuarioDto(
         @Email(message = "{email.invalido}") 
         String email,
 
-        @NotBlank(message = "{password.obrigatorio}")
+        @NotBlank(message = "{senha.obrigatorio}")
         String senha,
 
         @NotNull(message = "{data.obrigatorio}")
@@ -39,6 +39,5 @@ public record UsuarioDto(
         String telefone,
 
         @Valid
-        EnderecoDto enderecoDto) {
-
+        EnderecoDto endereco) {
 }

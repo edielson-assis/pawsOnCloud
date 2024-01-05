@@ -13,8 +13,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 @Entity
+@Getter
 @EqualsAndHashCode(of = "id")
 @Table(name = "nivel_acesso")
 public class NivelAcesso implements Serializable {
