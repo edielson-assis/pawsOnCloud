@@ -27,7 +27,7 @@ public class SpringDocConfiguration {
                         .description("API Rest da aplicação PawsOnCloud. A API permite aos usuários doar ou adotar animais de estimação.")
                         .contact(new Contact()
                                 .name("Documentação")
-                                .url(""))
+                                .url("#"))
                         .license(new License()
                                 .name("Licença MIT")
                                 .url("https://github.com/edielson-assis/pawsOnCloud/blob/main/LICENSE")));

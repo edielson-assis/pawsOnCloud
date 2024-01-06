@@ -30,7 +30,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/usuario/cadastro")
+@RequestMapping("/cadastro")
 public class UsuarioRegistroControle {
     
     private UsuarioRegistroServico servico;
