@@ -1,3 +1,3 @@
 package com.proz.projetointegrador.seguranca;
 
-public record TokenJWT(String tokrn) {}
+public record TokenJWT(String token) {}
