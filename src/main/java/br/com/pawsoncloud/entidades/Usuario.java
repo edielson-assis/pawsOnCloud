@@ -75,7 +75,11 @@ public class Usuario implements UserDetails {
 
     @Transient
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    private final List<Animais> animaisTutorado = new ArrayList<>();
+    private final List<Animais> animaisTutorados = new ArrayList<>();
+
+    @Transient
+    @OneToMany(mappedBy = "doador", fetch = FetchType.LAZY)
+    private final List<Doacao> animaisDoados = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
