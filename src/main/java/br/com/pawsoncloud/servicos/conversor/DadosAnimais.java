@@ -1,12 +1,9 @@
 package br.com.pawsoncloud.servicos.conversor;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import br.com.pawsoncloud.dto.AnimaisDto;
 import br.com.pawsoncloud.dto.AnimaisUpdateDto;
 import br.com.pawsoncloud.entidades.Animais;
-import br.com.pawsoncloud.entidades.Usuario;
+import br.com.pawsoncloud.entidades.Doacao;
 import br.com.pawsoncloud.entidades.enums.StatusAdocao;
 
 public class DadosAnimais {
@@ -20,14 +17,14 @@ public class DadosAnimais {
         animaisDto.peso(),
         animaisDto.imgUrl(),
         StatusAdocao.DISPONIVEL,
-        usuarioAutenticado());
+        new Doacao().getDoador());
     }
 
     public static Animais getAnimais(AnimaisDto animaisDto) {
         return fromDto(animaisDto);
     }
 
-    private static void updateData(Animais pet, AnimaisUpdateDto petDto) {
+    private static Animais updateData(Animais pet, AnimaisUpdateDto petDto) {
         pet.setNome(petDto.nome());
         pet.setPorte(petDto.porte());
         pet.setIdade(petDto.idade());
@@ -35,14 +32,10 @@ public class DadosAnimais {
         pet.setPelagem(petDto.pelagem());
         pet.setPeso(petDto.peso());
         pet.setImgUrl(petDto.imgUrl());
+        return pet;
     }  
 
-    public static void getPetAtualizado(Animais pet, AnimaisUpdateDto petDto) {
-        updateData(pet, petDto);
-    }
-
-    private static Usuario usuarioAutenticado() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (Usuario) authentication.getPrincipal();
+    public static Animais getPetAtualizado(Animais pet, AnimaisUpdateDto petDto) {
+        return updateData(pet, petDto);
     }
 }

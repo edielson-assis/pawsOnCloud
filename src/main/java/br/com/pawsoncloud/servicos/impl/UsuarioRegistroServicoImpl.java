@@ -56,6 +56,7 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
 
     @Override
     public void delete(Long id) {
+        findById(id);
         try {
             repositorio.deleteById(id);
         } catch (DataIntegrityViolationException e) {
