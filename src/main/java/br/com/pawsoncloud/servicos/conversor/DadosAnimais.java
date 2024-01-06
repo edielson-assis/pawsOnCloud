@@ -3,7 +3,6 @@ package br.com.pawsoncloud.servicos.conversor;
 import br.com.pawsoncloud.dto.AnimaisDto;
 import br.com.pawsoncloud.dto.AnimaisUpdateDto;
 import br.com.pawsoncloud.entidades.Animais;
-import br.com.pawsoncloud.entidades.Doacao;
 import br.com.pawsoncloud.entidades.enums.StatusAdocao;
 
 public class DadosAnimais {
@@ -17,7 +16,7 @@ public class DadosAnimais {
         animaisDto.peso(),
         animaisDto.imgUrl(),
         StatusAdocao.DISPONIVEL,
-        new Doacao().getDoador());
+        UsuarioLogado.getUsuario());
     }
 
     public static Animais getAnimais(AnimaisDto animaisDto) {
