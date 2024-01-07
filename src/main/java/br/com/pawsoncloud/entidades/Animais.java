@@ -58,4 +58,6 @@ public class Animais implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario; 
+
+    private boolean adotado;
 }

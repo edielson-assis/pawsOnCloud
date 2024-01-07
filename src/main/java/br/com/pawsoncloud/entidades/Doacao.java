@@ -35,6 +35,10 @@ public class Doacao implements Serializable {
     @Column(name = "data_doacao")
     private LocalDate dataDoacao;
 
+    @Setter(AccessLevel.NONE)
+    @Column(name = "data_cadastramento")
+    private LocalDate dataCadastramento;
+
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_animais", referencedColumnName = "id")
     private Animais pet;
@@ -43,4 +47,7 @@ public class Doacao implements Serializable {
     @Setter(AccessLevel.NONE)
     @JoinColumn(name = "id_usuario")
     private Usuario doador;
+
+    @Column(name = "confirmar_doacao")
+    private boolean confirmarDoacao;
 }

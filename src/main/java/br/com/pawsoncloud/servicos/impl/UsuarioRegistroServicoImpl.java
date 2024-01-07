@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import br.com.pawsoncloud.dto.UsuarioDto;
@@ -14,6 +15,7 @@ import br.com.pawsoncloud.entidades.Usuario;
 import br.com.pawsoncloud.repositorios.UsuarioRepositorio;
 import br.com.pawsoncloud.servicos.UsuarioRegistroServico;
 import br.com.pawsoncloud.servicos.conversor.DadosUsuario;
+import br.com.pawsoncloud.servicos.conversor.UsuarioLogado;
 import br.com.pawsoncloud.servicos.excecoes.DataBaseException;
 import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
 
@@ -50,15 +52,27 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
     @Override
     public Usuario update(Long id, UsuarioUpdateDto usuarioUpdateDto) {
         Usuario usuario = findById(id);
-        DadosUsuario.getUsuarioAtualizado(usuario, usuarioUpdateDto);
-        return repositorio.save(usuario);
+        try {
+            if (usuario.equals(UsuarioLogado.getUsuario())) {
+                DadosUsuario.getUsuarioAtualizado(usuario, usuarioUpdateDto);
+                return repositorio.save(usuario);
+            } else {
+                throw new BadCredentialsException("Não autorizado");
+            }
+        } catch (RuntimeException e) {
+            throw new DataBaseException(e.getMessage());
+        }
     }
 
     @Override
     public void delete(Long id) {
-        findById(id);
+        Usuario usuario = findById(id);
         try {
-            repositorio.deleteById(id);
+            if (usuario.equals(UsuarioLogado.getUsuario())) {
+                repositorio.deleteById(id);
+            } else {
+                throw new BadCredentialsException("Não autorizado");
+            }
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException(e.getMessage());
         }

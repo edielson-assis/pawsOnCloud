@@ -9,7 +9,7 @@ import br.com.pawsoncloud.entidades.Doacao;
 public class DadosDoacao {
     
     private static Doacao fromDto(DoacaoDto doacaoDto) {
-        return new Doacao(null, LocalDate.now(), DadosAnimais.getAnimais(doacaoDto.pet()), UsuarioLogado.getUsuario());
+        return new Doacao(null, null, LocalDate.now(), DadosAnimais.getAnimais(doacaoDto.pet()), UsuarioLogado.getUsuario(), false);
     }
 
     public static Doacao getDoacao(DoacaoDto doacaoDto) {
@@ -19,6 +19,7 @@ public class DadosDoacao {
     private static void updateData(Doacao doacao, DoacaoUpdateDto doacaoDto) {
         doacao.setId(doacaoDto.id());
         doacao.setPet(DadosAnimais.getPetAtualizado(doacao.getPet(), doacaoDto.pet()));
+        doacao.setConfirmarDoacao(doacaoDto.confirmarDoacao());
     }
 
     public static void getDoacaoAtualizada(Doacao doacao, DoacaoUpdateDto doacaoDto) {

@@ -16,7 +16,8 @@ public class DadosAnimais {
         animaisDto.peso(),
         animaisDto.imgUrl(),
         StatusAdocao.DISPONIVEL,
-        UsuarioLogado.getUsuario());
+        UsuarioLogado.getUsuario(),
+        animaisDto.adotado());
     }
 
     public static Animais getAnimais(AnimaisDto animaisDto) {
@@ -31,6 +32,7 @@ public class DadosAnimais {
         pet.setPelagem(petDto.pelagem());
         pet.setPeso(petDto.peso());
         pet.setImgUrl(petDto.imgUrl());
+        pet.setAdotado(petDto.adotado());
         return pet;
     }  
 

@@ -9,6 +9,8 @@ public record DoacaoUpdateDto(
     Long id,
 
     @Valid
-    AnimaisUpdateDto pet) {
+    AnimaisUpdateDto pet,
+    
+    boolean confirmarDoacao) {
     
 }
