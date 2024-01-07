@@ -17,6 +17,7 @@ import br.com.pawsoncloud.seguranca.excecoes.ValidationException;
 import br.com.pawsoncloud.servicos.excecoes.DataBaseException;
 import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
@@ -24,6 +25,13 @@ public class ControllerExceptionHandler {
     
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> resourceNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+        String error = "Não encontrado";
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        return ResponseEntity.status(status).body(errors(status, error, e, request));
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<StandardError> resourceNotFound(EntityNotFoundException e, HttpServletRequest request) {
         String error = "Não encontrado";
         HttpStatus status = HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).body(errors(status, error, e, request));
@@ -71,15 +79,15 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(errors(status, error, e, request));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<StandardError> databaseError(Exception e, HttpServletRequest request) {
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> databaseError(DataBaseException e, HttpServletRequest request) {
         String error = "Erro no servidor";
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(status).body(errors(status, error, e, request));
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<StandardError> databaseError(DataBaseException e, HttpServletRequest request) {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<StandardError> databaseError(Exception e, HttpServletRequest request) {
         String error = "Erro no servidor";
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(status).body(errors(status, error, e, request));

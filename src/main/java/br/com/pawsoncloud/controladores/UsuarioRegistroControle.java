@@ -64,7 +64,6 @@ public class UsuarioRegistroControle {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         servico.delete(id);
         return ResponseEntity.noContent().build();
