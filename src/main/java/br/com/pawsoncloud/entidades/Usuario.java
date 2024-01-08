@@ -1,7 +1,6 @@
 package br.com.pawsoncloud.entidades;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,15 +13,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -72,18 +68,6 @@ public class Usuario implements UserDetails {
     @Setter(AccessLevel.NONE)
     @JoinColumn(name = "id_nivel_acesso")
     private NivelAcesso nivelAcesso;
-
-    @Transient
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    private final List<Animais> animaisTutorados = new ArrayList<>();
-
-    @Transient
-    @OneToMany(mappedBy = "doador", fetch = FetchType.LAZY)
-    private final List<Doacao> animaisDoados = new ArrayList<>();
-
-    @Transient
-    @OneToMany(mappedBy = "doador", fetch = FetchType.LAZY)
-    private final List<Adocao> animaisAdotados = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

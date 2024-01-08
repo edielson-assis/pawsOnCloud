@@ -1,7 +1,5 @@
 package br.com.pawsoncloud.servicos.conversor;
 
-import java.time.LocalDate;
-
 import br.com.pawsoncloud.dto.AdocaoDto;
 import br.com.pawsoncloud.dto.AdocaoUpdateDto;
 import br.com.pawsoncloud.entidades.Adocao;
@@ -10,7 +8,7 @@ import br.com.pawsoncloud.entidades.Animais;
 public class DadosAdocao {
     
     private static Adocao fromDto(AdocaoDto adocaoDto) {
-        return new Adocao(null, LocalDate.now(), pet(adocaoDto), UsuarioLogado.getUsuario(), adocaoDto.confirmarAdocao());
+        return new Adocao(null, null, pet(adocaoDto), UsuarioLogado.getUsuario(), adocaoDto.confirmarAdocao());
     }
 
     public static Adocao getAdocao(AdocaoDto adocaoDto) {
