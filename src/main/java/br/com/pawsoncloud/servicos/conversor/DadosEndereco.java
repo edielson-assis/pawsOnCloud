@@ -1,7 +1,6 @@
 package br.com.pawsoncloud.servicos.conversor;
 
 import br.com.pawsoncloud.dto.EnderecoDto;
-import br.com.pawsoncloud.dto.EnderecoUpdateDto;
 import br.com.pawsoncloud.entidades.Endereco;
 
 public class DadosEndereco {
@@ -17,17 +16,17 @@ public class DadosEndereco {
         return fromDto(enderecoDto);
     }
 
-    private static Endereco updateData(Endereco endereo, EnderecoUpdateDto enderecoUpdateDto) {
-        endereo.setLogradouro(enderecoUpdateDto.logradouro());
-        if (!enderecoUpdateDto.complemento().isBlank()) {
-            endereo.setComplemento(enderecoUpdateDto.complemento());
+    private static Endereco updateData(Endereco endereo, EnderecoDto enderecoDto) {
+        endereo.setLogradouro(enderecoDto.logradouro());
+        if (!enderecoDto.complemento().isBlank()) {
+            endereo.setComplemento(enderecoDto.complemento());
         }
-        endereo.setCidade(enderecoUpdateDto.cidade());
-        endereo.setEstado(enderecoUpdateDto.estado());
+        endereo.setCidade(enderecoDto.cidade());
+        endereo.setEstado(enderecoDto.estado());
         return endereo;
     }
 
-    public static Endereco getEnderecoAtualizado(Endereco endereo, EnderecoUpdateDto enderecoUpdateDto) {
-        return updateData(endereo, enderecoUpdateDto);
+    public static Endereco getEnderecoAtualizado(Endereco endereo, EnderecoDto enderecoDto) {
+        return updateData(endereo, enderecoDto);
     }
 }

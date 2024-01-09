@@ -25,7 +25,5 @@ public record AnimaisDto(
     Double peso,
 
     @NotBlank(message = "{campo.obrigatorio}")
-    String imgUrl,
-    
-    boolean adotado) {    
+    String imgUrl) {    
 }

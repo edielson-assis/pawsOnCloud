@@ -1,9 +1,9 @@
 package br.com.pawsoncloud.servicos.conversor;
 
 import br.com.pawsoncloud.dto.AnimaisDto;
-import br.com.pawsoncloud.dto.AnimaisUpdateDto;
 import br.com.pawsoncloud.entidades.Animais;
 import br.com.pawsoncloud.entidades.enums.StatusAdocao;
+import br.com.pawsoncloud.servicos.impl.UsuarioLogado;
 
 public class DadosAnimais {
     
@@ -17,26 +17,10 @@ public class DadosAnimais {
         animaisDto.imgUrl(),
         StatusAdocao.DISPONIVEL,
         UsuarioLogado.getUsuario(),
-        animaisDto.adotado());
+        false);
     }
 
     public static Animais getAnimais(AnimaisDto animaisDto) {
         return fromDto(animaisDto);
-    }
-
-    private static Animais updateData(Animais pet, AnimaisUpdateDto petDto) {
-        pet.setNome(petDto.nome());
-        pet.setPorte(petDto.porte());
-        pet.setIdade(petDto.idade());
-        pet.setEspecie(petDto.especie());
-        pet.setPelagem(petDto.pelagem());
-        pet.setPeso(petDto.peso());
-        pet.setImgUrl(petDto.imgUrl());
-        pet.setAdotado(petDto.adotado());
-        return pet;
-    }  
-
-    public static Animais getPetAtualizado(Animais pet, AnimaisUpdateDto petDto) {
-        return updateData(pet, petDto);
     }
 }

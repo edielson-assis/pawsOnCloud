@@ -11,7 +11,6 @@ import br.com.pawsoncloud.entidades.Doacao;
 import br.com.pawsoncloud.repositorios.DoacaoRepositorio;
 import br.com.pawsoncloud.servicos.DoacaoServico;
 import br.com.pawsoncloud.servicos.conversor.DadosDoacao;
-import br.com.pawsoncloud.servicos.conversor.UsuarioLogado;
 import br.com.pawsoncloud.servicos.excecoes.DataBaseException;
 import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
 
@@ -34,7 +33,7 @@ public class DoacaoServicoImpl implements DoacaoServico {
     @Override
     public Doacao update(Long id, DoacaoUpdateDto doacaoDto) {
         try {
-            Doacao doacao = repositorio.getReferenceById(id);
+            Doacao doacao = getDoacaoReferencia(id);
             if (doacao.getDoador().equals(UsuarioLogado.getUsuario())) {
                 DadosDoacao.getDoacaoAtualizada(doacao, doacaoDto);
                 return repositorio.save(doacao);
@@ -49,7 +48,7 @@ public class DoacaoServicoImpl implements DoacaoServico {
     @Override
     public void delete(Long id) {
         try {
-            Doacao doacao = repositorio.getReferenceById(id);
+            Doacao doacao = getDoacaoReferencia(id);
             if (doacao.getDoador().equals(UsuarioLogado.getUsuario())) {
                 repositorio.deleteById(id);
             } else {
@@ -61,4 +60,8 @@ public class DoacaoServicoImpl implements DoacaoServico {
             throw new DataBaseException(e.getMessage());
         }
     }    
+
+    private Doacao getDoacaoReferencia(Long id) {
+        return repositorio.getReferenceById(id);
+    }
 }

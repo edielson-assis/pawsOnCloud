@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.pawsoncloud.dto.AnimaisRespDto;
+import br.com.pawsoncloud.dto.AnimaisResponseDto;
 import br.com.pawsoncloud.entidades.Animais;
 import br.com.pawsoncloud.servicos.AnimaisServico;
 
@@ -23,7 +24,7 @@ public class AnimaisControle {
     private AnimaisServico servico;
 
     @GetMapping
-    public ResponseEntity<Page<AnimaisRespDto>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
+    public ResponseEntity<Page<AnimaisResponseDto>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
         var page = servico.findAll(pageable);
         return ResponseEntity.ok().body(page);
     }

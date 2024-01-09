@@ -4,11 +4,12 @@ import br.com.pawsoncloud.dto.AdocaoDto;
 import br.com.pawsoncloud.dto.AdocaoUpdateDto;
 import br.com.pawsoncloud.entidades.Adocao;
 import br.com.pawsoncloud.entidades.Animais;
+import br.com.pawsoncloud.servicos.impl.UsuarioLogado;
 
 public class DadosAdocao {
     
     private static Adocao fromDto(AdocaoDto adocaoDto) {
-        return new Adocao(null, null, pet(adocaoDto), UsuarioLogado.getUsuario(), adocaoDto.confirmarAdocao());
+        return new Adocao(null, null, pet(adocaoDto), UsuarioLogado.getUsuario(), false);
     }
 
     public static Adocao getAdocao(AdocaoDto adocaoDto) {

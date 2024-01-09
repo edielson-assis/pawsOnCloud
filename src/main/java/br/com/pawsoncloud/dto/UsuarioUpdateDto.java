@@ -2,14 +2,10 @@ package br.com.pawsoncloud.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record UsuarioUpdateDto(
-
-    @NotNull(message = "{campo.obrigatorio}")
-    Long id,
 
     @NotBlank(message = "{nome.obrigatorio}") 
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "{campo.letras}")
@@ -24,5 +20,5 @@ public record UsuarioUpdateDto(
     String telefone,
 
     @Valid
-    EnderecoUpdateDto endereco) {
+    EnderecoDto endereco) {
 }

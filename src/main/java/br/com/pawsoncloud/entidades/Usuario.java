@@ -43,6 +43,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String nome;
 
+    @Setter(AccessLevel.NONE)
     @Column(nullable = false, unique = true)
     private String email;
 

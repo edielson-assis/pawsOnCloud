@@ -45,4 +45,12 @@ public class Adocao implements Serializable {
     private Usuario adotante;
 
     private boolean confirmarAdocao;
+
+    private void setDataAdocao() {
+        this.dataAdocao = LocalDate.now();
+    }
+
+    public void getDataAdocao() {
+        setDataAdocao();
+    }
 }

@@ -1,5 +1,7 @@
 package br.com.pawsoncloud.repositorios;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,4 +12,5 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
     boolean existsByEmail(String email);
     boolean existsByCpf(String cpf);
     UserDetails findByEmail(String email);
+    Optional<Usuario> findByCpf(String cpf);
 }

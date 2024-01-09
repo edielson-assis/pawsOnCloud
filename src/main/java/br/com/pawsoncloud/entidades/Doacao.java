@@ -50,4 +50,12 @@ public class Doacao implements Serializable {
 
     @Column(name = "confirmar_doacao")
     private boolean confirmarDoacao;
+
+    private void setDataDoacao() {
+        this.dataDoacao = LocalDate.now();
+    }
+
+    public void getDataDoacao() {
+        setDataDoacao();
+    }
 }
