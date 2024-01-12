@@ -4,7 +4,7 @@ import br.com.pawsoncloud.entidades.Animais;
 import br.com.pawsoncloud.entidades.enums.StatusAdocao;
 
 public record AnimaisRespDto(Long id, String nome, String porte, Integer idade, String especie, String pelagem,
-        Double peso, String imgUrl, StatusAdocao status, UsuarioRespDto usuario) {
+        Double peso, String imgUrl, StatusAdocao status, UsuarioRespDto proprietario) {
 
     public AnimaisRespDto(Animais animais) {
         this(animais.getId(), animais.getNome(), animais.getPorte(), animais.getIdade(), animais.getEspecie(),

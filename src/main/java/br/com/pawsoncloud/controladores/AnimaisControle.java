@@ -13,12 +13,13 @@ import br.com.pawsoncloud.dto.AnimaisRespDto;
 import br.com.pawsoncloud.dto.AnimaisResponseDto;
 import br.com.pawsoncloud.entidades.Animais;
 import br.com.pawsoncloud.servicos.AnimaisServico;
-
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/animais")
+@SecurityRequirement(name = "bearer-key")
 public class AnimaisControle {
     
     private AnimaisServico servico;

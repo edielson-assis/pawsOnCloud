@@ -33,13 +33,14 @@ public class AnimaisServicoImpl implements AnimaisServico {
 
     @Override
     public Page<AnimaisResponseDto> findAll(Pageable pageable) {
-        Page<Animais> animais = animaisRepositorio.findAllByAdotadoFalse(pageable);
         animalAdotado();
+        Page<Animais> animais = animaisRepositorio.findAllByAdotadoFalse(pageable);
         return animais.map(AnimaisResponseDto::new);
     }
 
     @Override
     public Animais findById(Long id) {
+        animalAdotado();
         Optional<Animais> pet = animaisRepositorio.findByAdotadoFalse(id);
         return pet.orElseThrow(() -> new ObjectNotFoundException("Pet não encontrado. Id inválido: " + id));
     }

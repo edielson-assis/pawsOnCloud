@@ -17,7 +17,7 @@ import br.com.pawsoncloud.dto.AdocaoDto;
 import br.com.pawsoncloud.dto.AdocaoUpdateDto;
 import br.com.pawsoncloud.entidades.Adocao;
 import br.com.pawsoncloud.servicos.AdocaoServico;
-
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -26,6 +26,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/adocoes")
+@SecurityRequirement(name = "bearer-key")
 public class AdocaoControle {
     
     private AdocaoServico servico;

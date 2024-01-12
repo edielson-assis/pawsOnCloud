@@ -16,7 +16,7 @@ import br.com.pawsoncloud.dto.DoacaoDto;
 import br.com.pawsoncloud.dto.DoacaoUpdateDto;
 import br.com.pawsoncloud.entidades.Doacao;
 import br.com.pawsoncloud.servicos.DoacaoServico;
-
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -25,6 +25,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/doacoes")
+@SecurityRequirement(name = "bearer-key")
 public class DoacaoControle {
     
     private DoacaoServico servico;

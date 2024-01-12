@@ -17,19 +17,24 @@ import br.com.pawsoncloud.dto.UsuarioFullRespDto;
 import br.com.pawsoncloud.dto.UsuarioUpdateDto;
 import br.com.pawsoncloud.entidades.Usuario;
 import br.com.pawsoncloud.servicos.UsuarioRegistroServico;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/cadastro")
+@RequestMapping(value = "/usuario")
+@SecurityRequirement(name = "bearer-key")
 public class UsuarioRegistroControle {
     
     private UsuarioRegistroServico servico;
     
     @Transactional
-    @PostMapping
+    @PostMapping(path = "/cadastro")
     public ResponseEntity<Usuario> create(@Valid @RequestBody UsuarioDto usuarioDto) {
         Usuario usuario = servico.create(usuarioDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(usuario.getId()).toUri();
@@ -37,7 +42,7 @@ public class UsuarioRegistroControle {
     }
 
     @GetMapping
-    public ResponseEntity<UsuarioFullRespDto> findById() {
+    public ResponseEntity<UsuarioFullRespDto> findByCpf() {
         Usuario usuario = servico.findByCpf();
         return ResponseEntity.ok().body(new UsuarioFullRespDto(usuario));
     }

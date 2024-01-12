@@ -89,7 +89,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<StandardError> databaseError(Exception e, HttpServletRequest request) {
         String error = "Erro no servidor";
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        HttpStatus status = HttpStatus.CONFLICT;
         return ResponseEntity.status(status).body(errors(status, error, e, request));
     }
 
