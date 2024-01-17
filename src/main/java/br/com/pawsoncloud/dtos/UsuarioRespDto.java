@@ -1,4 +1,4 @@
-package br.com.pawsoncloud.dto;
+package br.com.pawsoncloud.dtos;
 
 import br.com.pawsoncloud.entidades.Usuario;
 

@@ -9,20 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.pawsoncloud.dto.AnimaisRespDto;
-import br.com.pawsoncloud.dto.AnimaisResponseDto;
+import br.com.pawsoncloud.dtos.AnimaisRespDto;
+import br.com.pawsoncloud.dtos.AnimaisResponseDto;
 import br.com.pawsoncloud.entidades.Animais;
 import br.com.pawsoncloud.servicos.AnimaisServico;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/animais")
+@RequestMapping("api/v1/animais")
 @SecurityRequirement(name = "bearer-key")
+@Tag(name = "Animais")
 public class AnimaisControle {
     
-    private AnimaisServico servico;
+    private final AnimaisServico servico;
 
     @GetMapping
     public ResponseEntity<Page<AnimaisResponseDto>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {

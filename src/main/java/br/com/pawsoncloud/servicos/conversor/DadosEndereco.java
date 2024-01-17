@@ -1,6 +1,6 @@
 package br.com.pawsoncloud.servicos.conversor;
 
-import br.com.pawsoncloud.dto.EnderecoDto;
+import br.com.pawsoncloud.dtos.EnderecoDto;
 import br.com.pawsoncloud.entidades.Endereco;
 
 public class DadosEndereco {

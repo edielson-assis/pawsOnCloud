@@ -1,4 +1,4 @@
-package br.com.pawsoncloud.dto;
+package br.com.pawsoncloud.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ public record AnimaisDto(
     Integer idade,
 
     @NotBlank(message = "{campo.obrigatorio}")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "{campo.letras}")
+    @Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]+$", message = "{campo.letras}")
     String especie,
     String pelagem,
 

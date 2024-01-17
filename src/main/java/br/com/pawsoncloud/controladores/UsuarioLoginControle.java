@@ -8,21 +8,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.pawsoncloud.dto.UsuarioAutenticado;
+import br.com.pawsoncloud.dtos.UsuarioAutenticado;
 import br.com.pawsoncloud.entidades.Usuario;
 import br.com.pawsoncloud.seguranca.TokenJWT;
 import br.com.pawsoncloud.seguranca.TokenService;
-
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/login")
+@RequestMapping("api/v1/login")
+@Tag(name = "Login")
 public class UsuarioLoginControle {
     
-    private AuthenticationManager manager;
-    private TokenService tokenService;
+    private final AuthenticationManager manager;
+    private final TokenService tokenService;
 
     @PostMapping
     public ResponseEntity<TokenJWT> login(@RequestBody @Valid UsuarioAutenticado usuario) {

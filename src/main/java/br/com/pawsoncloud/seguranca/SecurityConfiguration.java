@@ -22,15 +22,16 @@ import lombok.AllArgsConstructor;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
-    private SecurityFilter securityFilter;
+    private final SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers(HttpMethod.POST, "/login").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/usuario/cadastro").permitAll()
+                    req.requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/v1/usuario/cadastro").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/usuario/confirmar").permitAll()
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                     .requestMatchers("/admin/**").hasRole("ADMIN");
                     req.anyRequest().authenticated();

@@ -9,36 +9,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.pawsoncloud.dto.UsuarioDto;
-import br.com.pawsoncloud.dto.UsuarioFullRespDto;
-import br.com.pawsoncloud.dto.UsuarioUpdateDto;
+import br.com.pawsoncloud.dtos.UsuarioDto;
+import br.com.pawsoncloud.dtos.UsuarioFullRespDto;
+import br.com.pawsoncloud.dtos.UsuarioResponseDto;
+import br.com.pawsoncloud.dtos.UsuarioUpdateDto;
 import br.com.pawsoncloud.entidades.Usuario;
 import br.com.pawsoncloud.servicos.UsuarioRegistroServico;
-
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/usuario")
+@RequestMapping(value = "api/v1/usuario")
 @SecurityRequirement(name = "bearer-key")
+@Tag(name = "Usuários")
 public class UsuarioRegistroControle {
     
-    private UsuarioRegistroServico servico;
+    private final UsuarioRegistroServico servico;
     
     @Transactional
     @PostMapping(path = "/cadastro")
-    public ResponseEntity<Usuario> create(@Valid @RequestBody UsuarioDto usuarioDto) {
+    public ResponseEntity<UsuarioResponseDto> create(@Valid @RequestBody UsuarioDto usuarioDto) {
         Usuario usuario = servico.create(usuarioDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(new UsuarioResponseDto(usuario));
+    }
+
+    @GetMapping(path = "/confirmar")
+    public String confirmarToken(@RequestParam("token") String token) {
+        return servico.confirmarToken(token);
     }
 
     @GetMapping

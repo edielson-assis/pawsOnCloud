@@ -2,8 +2,8 @@ package br.com.pawsoncloud.servicos.conversor;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import br.com.pawsoncloud.dto.UsuarioDto;
-import br.com.pawsoncloud.dto.UsuarioUpdateDto;
+import br.com.pawsoncloud.dtos.UsuarioDto;
+import br.com.pawsoncloud.dtos.UsuarioUpdateDto;
 import br.com.pawsoncloud.entidades.NivelAcesso;
 import br.com.pawsoncloud.entidades.Usuario;
 
@@ -17,7 +17,8 @@ public class DadosUsuario {
         usuarioDto.cpf(),
         usuarioDto.telefone(),
         DadosEndereco.getEndereco(usuarioDto.endereco()),
-        NivelAcesso.getInstance());
+        NivelAcesso.getInstance(),
+        false);
     }
 
     public static Usuario getUsuario(UsuarioDto usuarioDto) {

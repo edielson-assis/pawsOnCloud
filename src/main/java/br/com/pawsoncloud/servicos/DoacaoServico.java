@@ -1,12 +1,16 @@
 package br.com.pawsoncloud.servicos;
 
-import br.com.pawsoncloud.dto.DoacaoDto;
-import br.com.pawsoncloud.dto.DoacaoUpdateDto;
+import java.util.List;
+
+import br.com.pawsoncloud.dtos.DoacaoDto;
+import br.com.pawsoncloud.dtos.DoacaoUpdateDto;
 import br.com.pawsoncloud.entidades.Doacao;
 
 public interface DoacaoServico {
     
     Doacao create(DoacaoDto doacaoDto);
+
+    List<Doacao> findByCpf();
 
     Doacao update(Long id, DoacaoUpdateDto doacaoDto);
 

@@ -24,6 +24,7 @@ public class SpringDocConfiguration {
                                         .bearerFormat("JWT")))
                 .info(new Info()
                         .title("PawsOnCloud API")
+                        .version("0.0.1")
                         .description("API Rest da aplicação PawsOnCloud. A API permite aos usuários doar ou adotar animais de estimação.")
                         .contact(new Contact()
                                 .name("Documentação")

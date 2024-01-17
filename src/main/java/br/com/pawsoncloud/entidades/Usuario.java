@@ -70,6 +70,8 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "id_nivel_acesso")
     private NivelAcesso nivelAcesso;
 
+    private boolean ativo;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(nivelAcesso.getNome()));
@@ -102,6 +104,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return ativo;
     }
 }

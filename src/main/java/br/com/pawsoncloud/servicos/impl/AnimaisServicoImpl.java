@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.pawsoncloud.dto.AnimaisResponseDto;
+import br.com.pawsoncloud.dtos.AnimaisResponseDto;
 import br.com.pawsoncloud.entidades.Adocao;
 import br.com.pawsoncloud.entidades.Animais;
 import br.com.pawsoncloud.entidades.Doacao;
@@ -27,9 +27,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AnimaisServicoImpl implements AnimaisServico {
 
-    private AnimaisRepositorio animaisRepositorio;
-    private DoacaoRepositorio doacaoRepositorio;
-    private AdocaoRepositorio adocaoRepositorio;
+    private final AnimaisRepositorio animaisRepositorio;
+    private final DoacaoRepositorio doacaoRepositorio;
+    private final AdocaoRepositorio adocaoRepositorio;
 
     @Override
     public Page<AnimaisResponseDto> findAll(Pageable pageable) {

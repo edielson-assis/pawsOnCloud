@@ -1,7 +1,7 @@
 package br.com.pawsoncloud.servicos.conversor;
 
-import br.com.pawsoncloud.dto.AdocaoDto;
-import br.com.pawsoncloud.dto.AdocaoUpdateDto;
+import br.com.pawsoncloud.dtos.AdocaoDto;
+import br.com.pawsoncloud.dtos.AdocaoUpdateDto;
 import br.com.pawsoncloud.entidades.Adocao;
 import br.com.pawsoncloud.entidades.Animais;
 import br.com.pawsoncloud.servicos.impl.UsuarioLogado;

@@ -1,4 +1,4 @@
-package br.com.pawsoncloud.dto;
+package br.com.pawsoncloud.dtos;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 public record UsuarioUpdateDto(
 
     @NotBlank(message = "{nome.obrigatorio}") 
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "{campo.letras}")
+    @Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]+$", message = "{campo.letras}")
     @Size(min = 3, message = "'${validatedValue}' precisa ter, pelo menos, {min} caracteres.")
     String nome,
 

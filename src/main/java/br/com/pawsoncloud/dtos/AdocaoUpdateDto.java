@@ -1,4 +1,4 @@
-package br.com.pawsoncloud.dto;
+package br.com.pawsoncloud.dtos;
 
 import jakarta.validation.constraints.NotNull;
 

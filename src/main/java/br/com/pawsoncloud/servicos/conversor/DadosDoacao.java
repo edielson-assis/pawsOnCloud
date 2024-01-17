@@ -2,8 +2,8 @@ package br.com.pawsoncloud.servicos.conversor;
 
 import java.time.LocalDate;
 
-import br.com.pawsoncloud.dto.DoacaoDto;
-import br.com.pawsoncloud.dto.DoacaoUpdateDto;
+import br.com.pawsoncloud.dtos.DoacaoDto;
+import br.com.pawsoncloud.dtos.DoacaoUpdateDto;
 import br.com.pawsoncloud.entidades.Doacao;
 import br.com.pawsoncloud.servicos.impl.UsuarioLogado;
 
