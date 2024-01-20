@@ -61,11 +61,11 @@ Esta é a API Rest da aplicação PawsOnCloud, desenvolvida em Java e Spring Boo
 
 ## Swagger :dash:
 
-![Screenshot 2024-01-20 072027](https://github.com/edielson-assis/pawsOnCloud/assets/105529988/030b1b61-c1b4-49ec-8263-c2ca5ac5bfd5)
+![Swagger](./assets/swagger.png)
 
 ## :toolbox: Modelo conceitual
 
-![Projeto Integrador - conceitual](https://github.com/edielson-assis/pawsOnCloud/assets/105529988/3d6a1636-7404-4492-87f2-0827d0e35acd)
+![UML](./assets/uml.png)
 
 ## Pré-requisitos
 
