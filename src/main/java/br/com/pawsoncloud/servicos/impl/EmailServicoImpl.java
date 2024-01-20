@@ -12,6 +12,11 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 
+/**
+ * Classe que implementa a interface <b>EmailServico</b>.
+ * 
+ * @author Edielson Assis
+ */
 @Service
 @AllArgsConstructor
 public class EmailServicoImpl implements EmailServico {
@@ -19,6 +24,12 @@ public class EmailServicoImpl implements EmailServico {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailServicoImpl.class);
     private final JavaMailSender mailSender;
   
+    /** 
+     * Método responsável por enviar o email de validação para para o usuário.
+     * @param para endereço de email do usuário.
+     * @param email mensagem que será enviada.
+     * @exception IllegalStateException será lançada caso haja falha no envio do email.
+     */
     @Async
     @Override
     public void enviar(String para, String email) {
@@ -29,7 +40,7 @@ public class EmailServicoImpl implements EmailServico {
             helper.setText(email, true);
             helper.setTo(para);
             helper.setSubject("Confirme o seu email");
-            helper.setFrom("PawsOnCloud");
+            helper.setFrom("pawsoncloud@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("Falha ao enviar o email ", e);

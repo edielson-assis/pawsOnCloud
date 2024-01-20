@@ -5,6 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Representa um objeto de transferência de dados (DTO) para informações de usuário.
+ * Este DTO é usado para validar e transportar dados de usuário para a API.
+ * 
+ * @author Edielson Assis
+ */
 public record UsuarioUpdateDto(
 
     @NotBlank(message = "{nome.obrigatorio}") 

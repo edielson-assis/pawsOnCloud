@@ -26,6 +26,11 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller responsável por manipular operações relacionadas as adoções do usuário.
+ * 
+ * @author Edielson Assis
+ */
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/v1/adocoes")
@@ -35,6 +40,12 @@ public class AdocaoControle {
     
     private final AdocaoServico servico;
 
+    /**
+     * Realiza uma adoção.
+     * 
+     * @param adocaoDto DTO com os dados da nova adoção.
+     * @return Um json com os dados da adoção e o código http 201
+     */
     @Transactional
     @PostMapping
     public ResponseEntity<AdocaoRespDto> create(@Valid @RequestBody AdocaoDto adocaoDto) {
@@ -43,6 +54,11 @@ public class AdocaoControle {
         return ResponseEntity.created(uri).body(new AdocaoRespDto(adocao));
     }
 
+    /**
+     * Pega todas as adoções com base no cpf do usuário.
+     * 
+     * @return Um json com todas as adoções e o código http 200
+     */
     @GetMapping
     public ResponseEntity<List<AdocaoRespDto>> findByCpf() {
         var adocoes = servico.findByCpf();
@@ -50,6 +66,13 @@ public class AdocaoControle {
         return ResponseEntity.ok().body(adocoesDto);
     }
 
+    /**
+     * Atualiza os dados da adoção.
+     * 
+     * @param id ID da adoção a ser atualizada.
+     * @param adocaoUpdateDto DTO contendo os dados da adoção.
+     * @return Código http 204
+     */
     @Transactional
     @PatchMapping(value = "/{id}") 
     public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody AdocaoUpdateDto adocaoUpdateDto) {
@@ -57,6 +80,12 @@ public class AdocaoControle {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Cancela uma adoção.
+     * 
+     * @param id ID da adoção a ser deletada.
+     * @return Código http 204
+     */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         servico.delete(id);

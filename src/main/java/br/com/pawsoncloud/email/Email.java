@@ -1,7 +1,18 @@
 package br.com.pawsoncloud.email;
 
+/**
+ * Classe responsável por construir o email.
+ * 
+ * @author Edielson Assis
+ */
 public class Email {
 
+    /** 
+     * Método estático que contém a mensagem de email que será enviada para o usuário na validação dos dados.
+     * @param nome nome do destinatário.
+     * @param link link de ativação.
+     * @return mensagem
+     */
     public static String construirEmail(String nome, String link) {
         return String.format("""
                 <div>

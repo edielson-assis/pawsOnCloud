@@ -17,6 +17,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller responsável por manipular operações relacionadas aos animais.
+ * 
+ * @author Edielson Assis
+ */
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/v1/animais")
@@ -26,12 +31,24 @@ public class AnimaisControle {
     
     private final AnimaisServico servico;
 
+    /** 
+     * Retorna uma lista paginada com todos os animais.
+     * 
+     * @param pageable lista de animais.
+     * @return Um json com todos os animais e o código http 200.
+     */
     @GetMapping
     public ResponseEntity<Page<AnimaisResponseDto>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
         var page = servico.findAll(pageable);
         return ResponseEntity.ok().body(page);
     }
 
+    /**
+     * Retorna um animal específico.
+     * 
+     * @param id ID do animal.
+     * @return Um json com os dados do animal e o código http 200.
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<AnimaisRespDto> findById(@PathVariable Long id) {
         Animais pet = servico.findById(id);

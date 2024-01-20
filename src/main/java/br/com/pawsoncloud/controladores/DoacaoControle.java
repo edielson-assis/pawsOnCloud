@@ -26,6 +26,11 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller responsável por manipular operações relacionadas as doações do usuário.
+ * 
+ * @author Edielson Assis
+ */
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/v1/doacoes")
@@ -35,6 +40,12 @@ public class DoacaoControle {
     
     private final DoacaoServico servico;
 
+    /**
+     * Realiza uma doação.
+     * 
+     * @param doacaoDto DTO com os dados da nova doação.
+     * @return Um json com os dados da doação e o código http 201
+     */
     @Transactional
     @PostMapping
     public ResponseEntity<DoacaoRespDto> create(@Valid @RequestBody DoacaoDto doacaoDto) {
@@ -43,6 +54,11 @@ public class DoacaoControle {
         return ResponseEntity.created(uri).body(new DoacaoRespDto(doacao));
     }
 
+    /**
+     * Retorna todas as doações com base no cpf do usuário.
+     * 
+     * @return Um json com todas as doações e o código http 200
+     */
     @GetMapping
     public ResponseEntity<List<DoacaoRespDto>> findByCpf() {
         var doacoes = servico.findByCpf();
@@ -50,6 +66,13 @@ public class DoacaoControle {
         return ResponseEntity.ok().body(doacoesDto);
     }
 
+    /**
+     * Atualiza os dados da doação.
+     * 
+     * @param id ID da doação a ser atualizada.
+     * @param doacaoUpdateDto DTO contendo os dados da doação.
+     * @return Código http 204
+     */
     @Transactional
     @PatchMapping(value = "/{id}") 
     public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody DoacaoUpdateDto doacaoUpdateDto) {
@@ -57,6 +80,12 @@ public class DoacaoControle {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Cancela uma doação.
+     * 
+     * @param id ID da doação a ser deletada.
+     * @return Código http 204
+     */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         servico.delete(id);

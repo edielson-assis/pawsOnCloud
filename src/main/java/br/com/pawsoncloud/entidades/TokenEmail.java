@@ -14,12 +14,17 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entidade JPA que representa um token no banco de dados.
+ * 
+ * @author Edielson Assis
+ */
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "token_email")
 public class TokenEmail implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,6 +45,14 @@ public class TokenEmail implements Serializable {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
+    /**
+     * Construtor para a criação de um objeto TokenEmail.
+     *
+     * @param token      O token associado a este objeto.
+     * @param criadoAs   A data e hora de criação do token.
+     * @param expiradoAs A data e hora de expiração do token.
+     * @param usuario    O usuário associado a este token.
+     */
     public TokenEmail(String token, LocalDateTime criadoAs, LocalDateTime expiradoAs, Usuario usuario) {
         this.token = token;
         this.criadoAs = criadoAs;

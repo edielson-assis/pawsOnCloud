@@ -4,6 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+/**
+ * Representa um objeto de transferência de dados (DTO) para informações de animais.
+ * Este DTO é usado para validar e transportar dados de animais para a API.
+ * 
+ * @author Edielson Assis
+ */
 public record AnimaisDto(
 
     @NotBlank(message = "{campo.obrigatorio}")

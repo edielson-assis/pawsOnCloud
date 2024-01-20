@@ -7,9 +7,20 @@ import br.com.pawsoncloud.dtos.UsuarioUpdateDto;
 import br.com.pawsoncloud.entidades.NivelAcesso;
 import br.com.pawsoncloud.entidades.Usuario;
 
+/**
+ * Classe responsável por realizar a conversão dos DTOs de usuário.
+ * 
+ * @author Edielson Assis
+ */
 public class DadosUsuario {
     
-    private static Usuario fromDto(UsuarioDto usuarioDto) {
+    /** 
+     * Cria um usuário e o mapeia com os dados do dto.
+     * 
+     * @param usuarioDto contém os dados do usuário que será criado.
+     * @return Usuario
+     */
+    public static Usuario getUsuario(UsuarioDto usuarioDto) {
         return new Usuario(null, usuarioDto.nome(),
         usuarioDto.email(),
         BCrypt.hashpw(usuarioDto.senha(), BCrypt.gensalt()),
@@ -21,18 +32,16 @@ public class DadosUsuario {
         false);
     }
 
-    public static Usuario getUsuario(UsuarioDto usuarioDto) {
-        return fromDto(usuarioDto);
-    }
-
-    private static void updateData(Usuario usuario, UsuarioUpdateDto usuarioUpdateDto) {
+    /**
+     * Atualiza os dados do objeto.
+     * 
+     * @param usuario objeto que será atualizado.
+     * @param usuarioUpdateDto contém os dados de atualização do usuário.
+     */
+    public static void getUsuarioAtualizado(Usuario usuario, UsuarioUpdateDto usuarioUpdateDto) {
         usuario.setNome(usuarioUpdateDto.nome());
         usuario.setSenha(BCrypt.hashpw(usuarioUpdateDto.senha(), BCrypt.gensalt()));
         usuario.setTelefone(usuarioUpdateDto.telefone());
         usuario.setEndereco(DadosEndereco.getEnderecoAtualizado(usuario.getEndereco(), usuarioUpdateDto.endereco()));     
-    }
-
-    public static void getUsuarioAtualizado(Usuario usuario, UsuarioUpdateDto usuarioUpdateDto) {
-        updateData(usuario, usuarioUpdateDto);
     }
 }

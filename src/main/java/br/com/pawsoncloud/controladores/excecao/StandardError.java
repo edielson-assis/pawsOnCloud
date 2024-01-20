@@ -10,6 +10,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Estrutura da clsse que gerará as informações de erro.
+ * 
+ * @author Edielson Assis
+ */
 @Data
 @Builder
 @NoArgsConstructor

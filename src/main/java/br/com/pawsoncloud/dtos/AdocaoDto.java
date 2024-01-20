@@ -1,5 +1,11 @@
 package br.com.pawsoncloud.dtos;
 
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
-public record AdocaoDto(@Valid Long petId) {}
+/**
+ * Representa um objeto de transferência de dados (DTO) para informações de adoção.
+ * Este DTO é usado para validar e transportar dados de adoção para a API.
+ * 
+ * @author Edielson Assis
+ */
+public record AdocaoDto(@NotNull Long petId) {}

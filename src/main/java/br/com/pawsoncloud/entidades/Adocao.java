@@ -19,6 +19,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Entidade JPA que representa uma adoção no banco de dados.
+ * 
+ * @author Edielson Assis
+ */
 @Entity
 @Getter
 @Setter 
@@ -36,6 +41,7 @@ public class Adocao implements Serializable {
     private LocalDate dataAdocao;
 
     @OneToOne
+    @Setter(AccessLevel.NONE)
     @JoinColumn(name = "id_animais", referencedColumnName = "id")
     private Animais pet;
 
@@ -50,6 +56,9 @@ public class Adocao implements Serializable {
         this.dataAdocao = LocalDate.now();
     }
 
+    /**
+     * Atualiza e pega a data de doação atualizda.
+     */
     public void getDataAdocao() {
         setDataAdocao();
     }

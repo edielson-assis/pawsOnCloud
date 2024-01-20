@@ -23,6 +23,11 @@ import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Classe que implementa a interface <b>DoacaoServico</b>.
+ * 
+ * @author Edielson Assis
+ */
 @Service
 @AllArgsConstructor
 public class AnimaisServicoImpl implements AnimaisServico {
@@ -31,6 +36,11 @@ public class AnimaisServicoImpl implements AnimaisServico {
     private final DoacaoRepositorio doacaoRepositorio;
     private final AdocaoRepositorio adocaoRepositorio;
 
+    /** 
+     * Retorna uma lista paginada de animais com base nas configurações do objeto Pageable.
+     * @param pageable objeto que deve ser configurado para determinar a order em que os animais serão exibidos.
+     * @return Lista de animais.
+     */
     @Override
     public Page<AnimaisResponseDto> findAll(Pageable pageable) {
         animalAdotado();
@@ -38,13 +48,19 @@ public class AnimaisServicoImpl implements AnimaisServico {
         return animais.map(AnimaisResponseDto::new);
     }
 
+    /**
+     * Retorna um pet com base no id fornecido. Caso o id seja inválido, uma exceção é lançada.
+     * 
+     * @param id id do animail pesquisado.
+     * @exception ObjectNotFoundException é lançada caso o pet não seja encontrado.
+     */
     @Override
     public Animais findById(Long id) {
         animalAdotado();
         Optional<Animais> pet = animaisRepositorio.findByAdotadoFalse(id);
         return pet.orElseThrow(() -> new ObjectNotFoundException("Pet não encontrado. Id inválido: " + id));
     }
-
+    // Verifica se o adotante e o doador confirmaram a adoção e atualiza o status do animal para adotado.
     private void animalAdotado() {
         List<Adocao> adocoesConfirmadas = adocaoRepositorio.findByConfirmarAdocaoTrue();
         List<Doacao> doacoesConfirmadas = doacaoRepositorio.findByConfirmarDoacaoTrue();

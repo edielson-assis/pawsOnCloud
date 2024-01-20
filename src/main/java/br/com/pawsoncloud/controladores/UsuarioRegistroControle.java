@@ -25,6 +25,11 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller responsável por manipular operações relacionadas a usuários.
+ * 
+ * @author Edielson Assis
+ */
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "api/v1/usuario")
@@ -34,6 +39,12 @@ public class UsuarioRegistroControle {
     
     private final UsuarioRegistroServico servico;
     
+    /**
+     * Cadastra um usuário.
+     * 
+     * @param usuarioDto DTO contendo informações do novo usuário.
+     * @return Um json com os dados do usuário e o código http 201
+     */
     @Transactional
     @PostMapping(path = "/cadastro")
     public ResponseEntity<UsuarioResponseDto> create(@Valid @RequestBody UsuarioDto usuarioDto) {
@@ -42,17 +53,34 @@ public class UsuarioRegistroControle {
         return ResponseEntity.created(uri).body(new UsuarioResponseDto(usuario));
     }
 
+    /**
+     * Valida o email do usuário por meio do token
+     * 
+     * @param token token de validação.
+     * @return Mensagem de validação.
+     */
     @GetMapping(path = "/confirmar")
     public String confirmarToken(@RequestParam("token") String token) {
         return servico.confirmarToken(token);
     }
 
+    /**
+     * Retorna todos os dados do usuário com base no cpf.
+     * 
+     * @return Um json com os dados do usuário e o código http 200
+     */
     @GetMapping
     public ResponseEntity<UsuarioFullRespDto> findByCpf() {
         Usuario usuario = servico.findByCpf();
         return ResponseEntity.ok().body(new UsuarioFullRespDto(usuario));
     }
 
+    /**
+     * Atualiza os dados do usuário.
+     * 
+     * @param usuarioDto DTO contendo as novas informações do usuário.
+     * @return Código http 204
+     */
     @Transactional
     @PutMapping 
     public ResponseEntity<Void> update(@Valid @RequestBody UsuarioUpdateDto usuarioDto) {
@@ -60,6 +88,11 @@ public class UsuarioRegistroControle {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Apaga a conta do usuário.
+     * 
+     * @return Código http 204
+     */
     @DeleteMapping
     public ResponseEntity<Void> delete() {
         servico.delete();

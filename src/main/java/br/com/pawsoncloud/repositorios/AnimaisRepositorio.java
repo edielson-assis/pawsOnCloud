@@ -9,16 +9,31 @@ import org.springframework.data.jpa.repository.Query;
 
 import br.com.pawsoncloud.entidades.Animais;
 
+/**
+ * Interface de repositório para a entidade Animais.
+ * 
+ * @author Edielson Assis
+ */
 public interface AnimaisRepositorio extends JpaRepository<Animais, Long> {
 
+    /**
+     * Retorna uma página de animais não adotados.
+     *
+     * @param page Objeto Pageable para paginação.
+     * @return Página de animais não adotados.
+     */
     Page<Animais> findAllByAdotadoFalse(Pageable page);
 
+    /**
+     * Retorna um animal não adotado com base no ID.
+     *
+     * @param id O ID do animal.
+     * @return Um Optional contendo o animal não adotado, se encontrado.
+     */
     @Query("""
-            select a from Animais a
-            where
-            a.adotado = false
-            and
-            a.id = :id
+            SELECT a FROM Animais a
+            WHERE a.adotado = false
+            AND a.id = :id
         """)
     Optional<Animais> findByAdotadoFalse(Long id);
 }

@@ -16,6 +16,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller responsável por manipular operações relacionadas ao login do usuário.
+ * 
+ * @author Edielson Assis
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/login")
@@ -25,6 +30,12 @@ public class UsuarioLoginControle {
     private final AuthenticationManager manager;
     private final TokenService tokenService;
 
+    /** 
+     * Valida os dados de login do usuário e devolve um token JWT, se os dados estiverem corretos.
+     * 
+     * @param usuario DTO contendo informações do usuário.
+     * @return Token JWT.
+     */
     @PostMapping
     public ResponseEntity<TokenJWT> login(@RequestBody @Valid UsuarioAutenticado usuario) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(usuario.email(), usuario.senha());
