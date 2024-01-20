@@ -29,6 +29,8 @@ Esta é a API Rest da aplicação PawsOnCloud, desenvolvida em Java e Spring Boo
 - Adotar: Os usuários podem adotar os animais que estão disponíveis, entrando em contato diretamente com o proprietário do animal.
 </p>
 
+<p>Para mais detalhes sobre a API, basta acessar a <a href="https://edielson-assis.github.io/documentacao-pawsoncloud/">documentação</a>.</p>
+
 ## :bulb: Funcionalidades
 
 ### :lock: Autenticação do usuário
