@@ -31,6 +31,8 @@ Esta é a API Rest da aplicação PawsOnCloud, desenvolvida em Java e Spring Boo
 
 <p>Para mais detalhes sobre a API, basta acessar a <a href="https://edielson-assis.github.io/documentacao-pawsoncloud/">documentação</a>.</p>
 
+<p>O front-end dessa aplicação pode ser acessado <a href="https://brunagiammelaro.github.io/sprint2-proz/">aqui</a>.</p>
+
 ## :bulb: Funcionalidades
 
 ### :lock: Autenticação do usuário
@@ -69,19 +71,14 @@ Esta é a API Rest da aplicação PawsOnCloud, desenvolvida em Java e Spring Boo
 
 ## Pré-requisitos
 
-- [x] Java JDK 17<br>
-- [x] IDE para desenvolvimento Java (utilizei o Vs Code)<br>
-- [x] Git<br>
-- [x] Conta no GitHub<br>
-
-## Tutorial de como usar o Java no Vs Code
-
-[Java e configuração do Vs Code](https://www.youtube.com/watch?v=xUCGahzEM84) <br>
-[Instalação do Java 17](https://www.youtube.com/watch?v=QekeJBShCy4)
+- [x] Java JDK 17
+- [x] IDE para desenvolvimento Java 
+- [x] Git
+- [x] Conta no GitHub
  
 ## Como rodar a aplicação :arrow_forward:
 
-Faça um fork do projeto, após isso, abra o terminal do git bash, na pasta onde deseja salvar o projeto, e digite o seguinte comando: 
+Faça um fork do projeto, após isso, abra o terminal do git bash na pasta onde deseja salvar o projeto, e digite o seguinte comando: 
 
 ```
 git clone git@github.com:edielson-assis/pawsOnCloud.git
@@ -90,7 +87,7 @@ Crie uma base de dados no MySQL com o nome **projeto_integrador**. Não é neces
 
 Em seguida, abra o projeto na IDE de sua preferência, atualize o arquivo **application.properties** com os dados da base de dados criada e execute-o a partir do método **main**.
 
-Após executar o projeto, abra o seu navegador de internet e na barra de endereço, digite o seguinte comando:
+Após executar o projeto, abra o seu navegador de internet e, na barra de endereço, digite o seguinte comando:
 
 ```
 http://localhost:8080/swagger-ui/index.html
@@ -103,33 +100,33 @@ Agora é só testar as funcionalidades do projeto. Não se esqueça de se regist
 - [Maven](https://maven.apache.org/ref/3.9.3/maven-core/index.html)
 - [Lombok](https://mvnrepository.com/artifact/org.projectlombok/lombok)
 - [MySQL Connector](https://mvnrepository.com/artifact/mysql/mysql-connector-java)
-- [Spring Data JPA](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa/3.1.4)
+- [Spring Data JPA](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa/3.2.1)
 - [Bean Validation API](https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api/3.0.2)
 - [Spring Boot Starter Web](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
 - [Flyway MySQL](https://mvnrepository.com/artifact/org.flywaydb/flyway-mysql/9.22.2)
 - [Flyway Core](https://mvnrepository.com/artifact/org.flywaydb/flyway-core/9.22.2)
 - [Spring Security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security/3.1.4)
 - [Java JWT](https://mvnrepository.com/artifact/com.auth0/java-jwt/4.4.0)
-- [Swagger](https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui/2.2.0)
+- [Swagger](https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui/2.3.0)
 - [Spring Mail](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail/3.2.1)
 
 ## :gear: Atualizações futuras
 ### Back End
 - [ ] Escrever testes unitários.
 - [ ] Escrever testes de integração.
-- [ ] Alterar o link de validação para redirecionar os usuários para plataforma.
+- [ ] Alterar o link de validação para redirecionar os usuários para uma página web.
 - [ ] Criar um método para deletar ou atualizar o token de validação, caso o usuário realize o cadastro, mas não valide o email.
-- [ ] Criar usuário admin.
 - [ ] Implementar as funcionalidades para a página do blog.
-- [ ] Implementar as funcionalidades para a página de ongs.
+- [ ] Implementar as funcionalidades para a página das ongs.
+- [ ] Após finalizar a documentação, remover os comentários para deixar o código mais limpo.
 
 ### Front End
-- [ ] Criar uma página pare receber o token de validação e retornar se o email foi validado.
+- [ ] Criar uma página para receber o token de validação e retornar se o email foi validado.
 - [ ] Alterar a estrutura da página de adoção para gerar os cards dinamicamente.
 - [ ] Criar o menu do usuário.
 - [ ] Dsiponibilizar o acesso ao formulário de adoção e doação no menu do usuário.
 - [ ] Retirar os formulários de adoção e doação da página de cadastramento.
-- [ ] Trocar a implementação da página de ongs para exibir os dados diretamente do banco de dados.
+- [ ] Trocar a implementação da página de ongs para pegar os dados diretamente do banco de dados.
 - [ ] Alterar a estrutura da página de blog para reproduzir as postagens dinamicamente.
 
 ## Licença 

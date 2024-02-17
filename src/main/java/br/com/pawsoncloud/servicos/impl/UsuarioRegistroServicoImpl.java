@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import br.com.pawsoncloud.dtos.UsuarioDto;
@@ -178,7 +177,7 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
      * @return token
      */
     private String gerarToken(Usuario usuario) {
-        String token = BCrypt.hashpw(UUID.randomUUID().toString(), BCrypt.gensalt());
+        String token = UUID.randomUUID().toString();
 
         TokenEmail tokenEmail = new TokenEmail(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), usuario);
         tokenEmailServico.createToken(tokenEmail);

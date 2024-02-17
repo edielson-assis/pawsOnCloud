@@ -19,6 +19,7 @@ import br.com.pawsoncloud.dtos.UsuarioResponseDto;
 import br.com.pawsoncloud.dtos.UsuarioUpdateDto;
 import br.com.pawsoncloud.entidades.Usuario;
 import br.com.pawsoncloud.servicos.UsuarioRegistroServico;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
@@ -33,11 +34,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "api/v1/usuario")
-@SecurityRequirement(name = "bearer-key")
 @Tag(name = "Usuários")
 public class UsuarioRegistroControle {
     
     private final UsuarioRegistroServico servico;
+    private static final String SECURITY_SCHEME_KEY = "bearer-key";
     
     /**
      * Cadastra um usuário.
@@ -69,6 +70,7 @@ public class UsuarioRegistroControle {
      * 
      * @return Um json com os dados do usuário e o código http 200
      */
+    @Operation(security = {@SecurityRequirement(name = SECURITY_SCHEME_KEY)})
     @GetMapping
     public ResponseEntity<UsuarioFullRespDto> findByCpf() {
         Usuario usuario = servico.findByCpf();
@@ -81,6 +83,7 @@ public class UsuarioRegistroControle {
      * @param usuarioDto DTO contendo as novas informações do usuário.
      * @return Código http 204
      */
+    @Operation(security = {@SecurityRequirement(name = SECURITY_SCHEME_KEY)})
     @Transactional
     @PutMapping 
     public ResponseEntity<Void> update(@Valid @RequestBody UsuarioUpdateDto usuarioDto) {
@@ -93,6 +96,7 @@ public class UsuarioRegistroControle {
      * 
      * @return Código http 204
      */
+    @Operation(security = {@SecurityRequirement(name = SECURITY_SCHEME_KEY)})
     @DeleteMapping
     public ResponseEntity<Void> delete() {
         servico.delete();
