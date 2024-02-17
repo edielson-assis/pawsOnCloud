@@ -128,6 +128,7 @@ Agora é só testar as funcionalidades do projeto. Não se esqueça de se regist
 - [ ] Retirar os formulários de adoção e doação da página de cadastramento.
 - [ ] Trocar a implementação da página de ongs para pegar os dados diretamente do banco de dados.
 - [ ] Alterar a estrutura da página de blog para reproduzir as postagens dinamicamente.
+- [ ] Criar uma página sobre nós.
 
 ## Licença 
 
