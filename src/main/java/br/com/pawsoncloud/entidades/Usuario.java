@@ -32,8 +32,7 @@ import lombok.Setter;
  * 
  * @author Edielson Assis
  */
-@JsonIgnoreProperties(value = { "nivelAcesso", "enabled", "accountNonLocked", "authorities", "password", "username",
-        "credentialsNonExpired", "accountNonExpired" })
+@JsonIgnoreProperties(value = { "nivelAcesso", "enabled", "accountNonLocked", "authorities", "password", "username", "credentialsNonExpired", "accountNonExpired" })
 @Entity
 @Getter
 @Setter
@@ -149,5 +148,4 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return ativo;
     }
-
 }

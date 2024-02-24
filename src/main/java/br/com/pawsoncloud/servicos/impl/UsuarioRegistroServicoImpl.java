@@ -1,5 +1,9 @@
 package br.com.pawsoncloud.servicos.impl;
 
+import static br.com.pawsoncloud.servicos.conversor.DadosUsuario.getUsuario;
+import static br.com.pawsoncloud.servicos.conversor.DadosUsuario.getUsuarioAtualizado;
+import static br.com.pawsoncloud.servicos.impl.UsuarioLogado.getUsuario;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,14 +17,13 @@ import br.com.pawsoncloud.email.Email;
 import br.com.pawsoncloud.entidades.TokenEmail;
 import br.com.pawsoncloud.entidades.Usuario;
 import br.com.pawsoncloud.repositorios.UsuarioRepositorio;
+import br.com.pawsoncloud.seguranca.excecoes.ValidationException;
 import br.com.pawsoncloud.servicos.EmailServico;
 import br.com.pawsoncloud.servicos.TokenEmailServico;
 import br.com.pawsoncloud.servicos.UsuarioRegistroServico;
-import br.com.pawsoncloud.servicos.conversor.DadosUsuario;
 import br.com.pawsoncloud.servicos.excecoes.DataBaseException;
 import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
-import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 
 /**
@@ -46,7 +49,7 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
      */
     @Override
     public Usuario create(UsuarioDto usuarioDto) {
-        Usuario usuario = DadosUsuario.getUsuario(usuarioDto);
+        Usuario usuario = getUsuario(usuarioDto);
         existsByEmail(usuario);
         existsByCpf(usuario);
         enviarToken(usuario);
@@ -62,7 +65,7 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
      */
     @Override
     public Usuario findByCpf() {
-        Optional<Usuario> usuario = repositorio.findByCpf(UsuarioLogado.getUsuario().getCpf());
+        Optional<Usuario> usuario = repositorio.findByCpf(getUsuario().getCpf());
         return usuario.orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
     }
 
@@ -77,7 +80,7 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
     @Override
     public Usuario update(UsuarioUpdateDto usuarioUpdateDto) {
         Usuario usuario = findByCpf();
-        DadosUsuario.getUsuarioAtualizado(usuario, usuarioUpdateDto);
+        getUsuarioAtualizado(usuario, usuarioUpdateDto);
         return repositorio.save(usuario);
     }
 
@@ -91,7 +94,7 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
     public void delete() {
         Usuario usuario = findByCpf();
         try {
-            repositorio.deleteById(usuario.getId());
+            repositorio.delete(usuario);
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException(e.getMessage());
         }

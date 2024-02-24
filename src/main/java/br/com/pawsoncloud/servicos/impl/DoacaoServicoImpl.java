@@ -1,5 +1,9 @@
 package br.com.pawsoncloud.servicos.impl;
 
+import static br.com.pawsoncloud.servicos.conversor.DadosDoacao.getDoacao;
+import static br.com.pawsoncloud.servicos.conversor.DadosDoacao.getDoacaoAtualizada;
+import static br.com.pawsoncloud.servicos.impl.UsuarioLogado.getUsuario;
+
 import java.util.List;
 
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,7 +14,6 @@ import br.com.pawsoncloud.dtos.DoacaoUpdateDto;
 import br.com.pawsoncloud.entidades.Doacao;
 import br.com.pawsoncloud.repositorios.DoacaoRepositorio;
 import br.com.pawsoncloud.servicos.DoacaoServico;
-import br.com.pawsoncloud.servicos.conversor.DadosDoacao;
 import br.com.pawsoncloud.servicos.excecoes.DataBaseException;
 import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,7 +37,7 @@ public class DoacaoServicoImpl implements DoacaoServico {
      */
     @Override
     public Doacao create(DoacaoDto doacaoDto) {
-        Doacao doacao = DadosDoacao.getDoacao(doacaoDto);
+        Doacao doacao = getDoacao(doacaoDto);
         return repositorio.save(doacao);
     }
 
@@ -48,7 +51,7 @@ public class DoacaoServicoImpl implements DoacaoServico {
      */
     @Override
     public List<Doacao> findByCpf() {
-        var doacoes = repositorio.findByUsuarioCpf(UsuarioLogado.getUsuario().getCpf());
+        var doacoes = repositorio.findByUsuarioCpf(getUsuario().getCpf());
         if (doacoes.isEmpty()) {
             throw new ObjectNotFoundException("Você não possui nenhuma doação");
         }
@@ -68,14 +71,9 @@ public class DoacaoServicoImpl implements DoacaoServico {
     @Override
     public Doacao update(Long id, DoacaoUpdateDto doacaoDto) {
         Doacao doacao = getDoacaoReferencia(id);
-        if (!doacao.getDoador().equals(UsuarioLogado.getUsuario())) {
-            throw new BadCredentialsException("Não autorizado");
-        } else if (doacao.getPet().isAdotado()) {
-            throw new DataBaseException("Doação já finalizada");
-        } else {
-            DadosDoacao.getDoacaoAtualizada(doacao, doacaoDto);
-            return repositorio.save(doacao);
-        }            
+        validaUpdateOuDelete(doacao);
+        getDoacaoAtualizada(doacao, doacaoDto);
+        return repositorio.save(doacao);           
     }
 
     /**
@@ -91,14 +89,18 @@ public class DoacaoServicoImpl implements DoacaoServico {
     @Override
     public void delete(Long id) {
         Doacao doacao = getDoacaoReferencia(id);
-        if (!doacao.getDoador().equals(UsuarioLogado.getUsuario())) {
+        validaUpdateOuDelete(doacao);
+        repositorio.deleteById(id);
+    }   
+    
+    private void validaUpdateOuDelete(Doacao doacao) {
+        if (!doacao.getDoador().equals(getUsuario())) {
             throw new BadCredentialsException("Não autorizado");
-        } else if (doacao.getPet().isAdotado()) {
+        } 
+        if (doacao.getPet().isAdotado()) {
             throw new DataBaseException("Doação já finalizada");
-        } else {
-            repositorio.deleteById(id);
-        }
-    }    
+        } 
+    }
     
     /**
      * Pega a referência da doação no banco de dados pelo id informado

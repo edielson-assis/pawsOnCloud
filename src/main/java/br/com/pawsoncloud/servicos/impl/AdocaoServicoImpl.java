@@ -1,11 +1,13 @@
 package br.com.pawsoncloud.servicos.impl;
 
+import static br.com.pawsoncloud.servicos.conversor.DadosAdocao.getAdocao;
+import static br.com.pawsoncloud.servicos.conversor.DadosAdocao.getAdocaoAtualizada;
+import static br.com.pawsoncloud.servicos.impl.UsuarioLogado.getUsuario;
+
 import java.util.List;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
-
-import com.mysql.cj.exceptions.DataReadException;
 
 import br.com.pawsoncloud.dtos.AdocaoDto;
 import br.com.pawsoncloud.dtos.AdocaoUpdateDto;
@@ -16,7 +18,6 @@ import br.com.pawsoncloud.entidades.enums.StatusAdocao;
 import br.com.pawsoncloud.repositorios.AdocaoRepositorio;
 import br.com.pawsoncloud.repositorios.AnimaisRepositorio;
 import br.com.pawsoncloud.servicos.AdocaoServico;
-import br.com.pawsoncloud.servicos.conversor.DadosAdocao;
 import br.com.pawsoncloud.servicos.excecoes.DataBaseException;
 import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -49,17 +50,10 @@ public class AdocaoServicoImpl implements AdocaoServico {
     @Override
     public Adocao create(AdocaoDto adocaoDto) {
         Animais pet = getPetOrThrow(adocaoDto.petId());
-        if (!isDisponivel(pet)) {
-            throw new DataBaseException("Pet em pocesso de adoção");
-        } else if (isDoador(pet)) {
-            throw new DataBaseException("Você não pode adotar o próprio pet");
-        } else if (hasAdocaoPendente(UsuarioLogado.getUsuario())) {
-            throw new DataReadException("Você possui uma adoção pendente");
-        } else {
-            setStatusProcessoAdocao(pet);
-            Adocao adocao = DadosAdocao.getAdocao(adocaoDto);
-            return repositorio.save(adocao);
-        }
+        validaCreate(pet);
+        setStatusProcessoAdocao(pet);
+        Adocao adocao = getAdocao(adocaoDto);
+        return repositorio.save(adocao);
     }
 
     /**
@@ -72,7 +66,7 @@ public class AdocaoServicoImpl implements AdocaoServico {
      */
     @Override
     public List<Adocao> findByCpf() {
-        var adocoes = repositorio.findByUsuarioCpf(UsuarioLogado.getUsuario().getCpf());
+        var adocoes = repositorio.findByUsuarioCpf(getUsuario().getCpf());
         if (adocoes.isEmpty()) {
             throw new ObjectNotFoundException("Você não possui nenhuma adoção");
         }
@@ -92,14 +86,9 @@ public class AdocaoServicoImpl implements AdocaoServico {
     @Override
     public Adocao update(Long id, AdocaoUpdateDto adocaoDto) {
         Adocao adocao = getAdocaoReferenceOrThrow(id);
-        if (!adocao.getAdotante().equals(UsuarioLogado.getUsuario())) {
-            throw new BadCredentialsException("Não autorizado");
-        } else if (adocao.getPet().isAdotado()) {
-            throw new DataBaseException("Adoção já finalizada");
-        } else {
-            DadosAdocao.getAdocaoAtualizada(adocao, adocaoDto);
-            return repositorio.save(adocao);
-        }
+        validaUpdateOuDelete(adocao);
+        getAdocaoAtualizada(adocao, adocaoDto);
+        return repositorio.save(adocao);
     }
 
     /**
@@ -115,13 +104,29 @@ public class AdocaoServicoImpl implements AdocaoServico {
     @Override
     public void delete(Long id) {
         Adocao adocao = getAdocaoReferenceOrThrow(id);
-        if (!adocao.getAdotante().equals(UsuarioLogado.getUsuario())) {
+        validaUpdateOuDelete(adocao);
+        setStatusDisponivel(adocao.getPet());
+        repositorio.deleteById(id);
+    }
+
+    private void validaCreate(Animais pet) {
+        if (!isDisponivel(pet)) {
+            throw new DataBaseException("Pet em pocesso de adoção");
+        } 
+        if (isDoador(pet)) {
+            throw new DataBaseException("Você não pode adotar o próprio pet");
+        } 
+        if (hasAdocaoPendente(getUsuario())) {
+            throw new DataBaseException("Você possui uma adoção pendente");
+        } 
+    }
+
+    private void validaUpdateOuDelete(Adocao adocao) {
+        if (!adocao.getAdotante().equals(getUsuario())) {
             throw new BadCredentialsException("Não autorizado");
-        } else if (adocao.getPet().isAdotado()) {
+        }  
+        if (adocao.getPet().isAdotado()) {
             throw new DataBaseException("Adoção já finalizada");
-        } else {
-            setStatusDisponivel(adocao.getPet());
-            repositorio.deleteById(id);
         }
     }
     // Pega o pet no banco de dados pelo id informado. Se o id for inválido, uma exceção será lançada.
@@ -135,7 +140,7 @@ public class AdocaoServicoImpl implements AdocaoServico {
     }
     // Verifica se o adotante é o doador.
     private boolean isDoador(Animais pet) {
-        return pet.getUsuario().equals(UsuarioLogado.getUsuario());
+        return pet.getUsuario().equals(getUsuario());
     }
     // Atualiza o status do animal para em PROCESSO_ADOCAO.
     private void setStatusProcessoAdocao(Animais pet) {

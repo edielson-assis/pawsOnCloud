@@ -28,7 +28,8 @@ public class EmailServicoImpl implements EmailServico {
      * Método responsável por enviar o email de validação para para o usuário.
      * @param para endereço de email do usuário.
      * @param email mensagem que será enviada.
-     * @exception IllegalStateException será lançada caso haja falha no envio do email.
+     * @exception IllegalStateException será lançada se endereço de email For vázio.
+     * @exception IllegalArgumentException será se conteúdo ou endereço de email forem nulos.
      */
     @Async
     @Override
@@ -40,11 +41,13 @@ public class EmailServicoImpl implements EmailServico {
             helper.setText(email, true);
             helper.setTo(para);
             helper.setSubject("Confirme o seu email");
-            helper.setFrom("pawsoncloud@gmail.com");
+            helper.setFrom("${EMAIL_USERNAME}");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("Falha ao enviar o email ", e);
             throw new IllegalStateException("Falha ao enviar o email");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("O conteúdo ou endereço de email não pode ser nulo");
         }
     }
 }
