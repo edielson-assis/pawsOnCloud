@@ -1,4 +1,4 @@
-package br.com.pawsoncloud.servicos;
+package br.com.pawsoncloud.testesunitarios.servicos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -202,8 +202,8 @@ class DoacaoServicoTest {
     }
 
     @Test
-    @DisplayName("Deve lancar uma BadCredentialsException se os dados do adotante nao forem iguais")
-    void testDeveLancarUmaBadCredentialsExceptionSeOsDadosDoAdotanteNaoForemIguais() {
+    @DisplayName("Deve lancar uma BadCredentialsException se os dados do doador nao forem iguais")
+    void testDeveLancarUmaBadCredentialsExceptionSeOsDadosDoDoadorNaoForemIguais() {
         
         // Given / Arrange
         getUsuarioAutenticado(new Usuario(2l, null, null, null, null, "411.727.360-49", null, null, NivelAcesso.getInstance(), true));

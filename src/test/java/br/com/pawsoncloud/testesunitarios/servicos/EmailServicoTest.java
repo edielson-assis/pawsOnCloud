@@ -1,4 +1,4 @@
-package br.com.pawsoncloud.servicos;
+package br.com.pawsoncloud.testesunitarios.servicos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -1,4 +1,4 @@
-package br.com.pawsoncloud.servicos;
+package br.com.pawsoncloud.testesunitarios.servicos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -35,6 +35,8 @@ import br.com.pawsoncloud.entidades.TokenEmail;
 import br.com.pawsoncloud.entidades.Usuario;
 import br.com.pawsoncloud.repositorios.UsuarioRepositorio;
 import br.com.pawsoncloud.seguranca.excecoes.ValidationException;
+import br.com.pawsoncloud.servicos.EmailServico;
+import br.com.pawsoncloud.servicos.TokenEmailServico;
 import br.com.pawsoncloud.servicos.conversor.DadosUsuario;
 import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
 import br.com.pawsoncloud.servicos.impl.UsuarioRegistroServicoImpl;
@@ -51,15 +53,14 @@ class UsuarioRegistroServicoTest {
     @Mock
     private EmailServico emailServico;
 
+    @Mock
+    private EnderecoDto endereco;
+
     @InjectMocks
     private UsuarioRegistroServicoImpl servico;
 
     private Usuario usuario;
-
     private UsuarioDto usuarioDto;
-
-    @Mock
-    private EnderecoDto endereco;
 
     @BeforeEach
     void setup() {
