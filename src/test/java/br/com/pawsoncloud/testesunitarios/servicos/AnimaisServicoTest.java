@@ -92,8 +92,8 @@ class AnimaisServicoTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma list de animais")
-    void testDeveRetornarUmaListaDeAnimais() {
+    @DisplayName("Deve retornar uma lista paginada de animais")
+    void testDeveRetornarUmaListaPaginadaDeAnimais() {
 
         // Given / Arrange
         Pageable pageable = mock(Pageable.class);

@@ -16,14 +16,14 @@ public record AnimaisDto(
     String nome,
 
     @NotBlank(message = "{campo.obrigatorio}")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "{campo.letras}")
+    @Pattern(regexp = "^[a-zA-Z-]+$", message = "{campo.letras}")
     String porte,
 
     @NotNull(message = "{campo.obrigatorio}")
     Integer idade,
 
     @NotBlank(message = "{campo.obrigatorio}")
-    @Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]+$", message = "{campo.letras}")
+    @Pattern(regexp = "^[a-zA-Z-]+$", message = "{campo.letras}")
     String especie,
     String pelagem,
 

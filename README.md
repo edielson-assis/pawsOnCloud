@@ -105,14 +105,14 @@ Agora é só testar as funcionalidades do projeto. Não se esqueça de se regist
 - [Spring Boot Starter Web](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
 - [Flyway MySQL](https://mvnrepository.com/artifact/org.flywaydb/flyway-mysql/9.22.2)
 - [Flyway Core](https://mvnrepository.com/artifact/org.flywaydb/flyway-core/9.22.2)
-- [Spring Security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security/3.1.4)
+- [Spring Security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security/3.2.1)
 - [Java JWT](https://mvnrepository.com/artifact/com.auth0/java-jwt/4.4.0)
 - [Swagger](https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui/2.3.0)
 - [Spring Mail](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail/3.2.1)
 
 ## :gear: Atualizações futuras
 ### Back End
-- [ ] Escrever testes unitários.
+- [x] Escrever testes unitários.
 - [ ] Escrever testes de integração.
 - [ ] Alterar o link de validação para redirecionar os usuários para uma página web.
 - [ ] Criar um método para deletar ou atualizar o token de validação, caso o usuário realize o cadastro, mas não valide o email.

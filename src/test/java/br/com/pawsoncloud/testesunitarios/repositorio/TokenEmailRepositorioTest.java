@@ -26,7 +26,7 @@ class TokenEmailRepositorioTest extends AbstractIntegrationTest {
 
     private TokenEmail tokenEmail;
 
-    private static final String token = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+    private static final String TOKEN = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
 
     @BeforeEach
     void setup() {
@@ -43,7 +43,7 @@ class TokenEmailRepositorioTest extends AbstractIntegrationTest {
         // Then / Assert
         assertNotNull(tokenCriado);
         assertTrue(tokenCriado.getId() > 0);
-        assertEquals(token, tokenCriado.getToken());
+        assertEquals(TOKEN, tokenCriado.getToken());
     }
 
     @Test
@@ -54,7 +54,7 @@ class TokenEmailRepositorioTest extends AbstractIntegrationTest {
         repositorio.save(tokenEmail);
 
         // When / Act
-        TokenEmail tokenSalvo = repositorio.findByToken(token).get();
+        TokenEmail tokenSalvo = repositorio.findByToken(TOKEN).get();
 
         // Then / Assert
         assertNotNull(tokenSalvo);
@@ -68,7 +68,7 @@ class TokenEmailRepositorioTest extends AbstractIntegrationTest {
         repositorio.save(tokenEmail);
 
         // When / Act
-        int tokenSalvo = repositorio.updateConfirmadoAs(token, LocalDateTime.now());
+        int tokenSalvo = repositorio.updateConfirmadoAs(TOKEN, LocalDateTime.now());
 
         // Then / Assert
         assertEquals(1, tokenSalvo);

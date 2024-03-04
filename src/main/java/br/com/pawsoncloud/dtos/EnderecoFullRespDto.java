@@ -9,7 +9,7 @@ import br.com.pawsoncloud.entidades.Endereco;
  * 
  * @author Edielson Assis
  */
-public record EnderecoFullRespDto(String Logradouro, String complemento, String cidade, String estado) {
+public record EnderecoFullRespDto(String logradouro, String complemento, String cidade, String estado) {
 
     /**
      * Construtor que converte uma instância de Endereco para EnderecoFullRespDto.
