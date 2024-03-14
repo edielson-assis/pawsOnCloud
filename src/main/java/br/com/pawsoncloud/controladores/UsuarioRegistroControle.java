@@ -61,8 +61,8 @@ public class UsuarioRegistroControle {
      * @return Mensagem de validação.
      */
     @GetMapping(path = "/confirmar")
-    public String confirmarToken(@RequestParam("token") String token) {
-        return servico.confirmarToken(token);
+    public ResponseEntity<String> confirmarToken(@RequestParam("token") String token) {
+        return ResponseEntity.ok(servico.confirmarToken(token));
     }
 
     /**

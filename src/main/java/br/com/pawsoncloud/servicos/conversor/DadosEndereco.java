@@ -20,7 +20,7 @@ public class DadosEndereco {
         return new Endereco(null, enderecoDto.logradouro(),
         enderecoDto.complemento(),
         enderecoDto.cidade(),
-        enderecoDto.estado());
+        enderecoDto.estado().toUpperCase());
     }
 
     /**
@@ -36,7 +36,7 @@ public class DadosEndereco {
             endereo.setComplemento(enderecoDto.complemento());
         }
         endereo.setCidade(enderecoDto.cidade());
-        endereo.setEstado(enderecoDto.estado());
+        endereo.setEstado(enderecoDto.estado().toUpperCase());
         return endereo;
     }
 }

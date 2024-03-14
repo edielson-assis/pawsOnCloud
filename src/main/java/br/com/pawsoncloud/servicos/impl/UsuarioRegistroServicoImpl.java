@@ -7,6 +7,9 @@ import static br.com.pawsoncloud.servicos.impl.UsuarioLogado.getUsuario;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,7 @@ import br.com.pawsoncloud.servicos.TokenEmailServico;
 import br.com.pawsoncloud.servicos.UsuarioRegistroServico;
 import br.com.pawsoncloud.servicos.excecoes.DataBaseException;
 import br.com.pawsoncloud.servicos.excecoes.ObjectNotFoundException;
-import jakarta.transaction.Transactional;
+import jakarta.annotation.PreDestroy;
 import lombok.AllArgsConstructor;
 
 /**
@@ -38,10 +41,11 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
     private final UsuarioRepositorio repositorio;
     private final TokenEmailServico tokenEmailServico;
     private final EmailServico emailServico;
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     /**
      * Verifica se o email ou cpf informado ja está cadastrado. 
-     * Se sim, é retornado uma mensagem informando que o email ou cpf já está cadastrado. 
+     * Se sim, é retornado uma mensagem informando que o email ou cpf já está cadastrado.
      * Se não, é enviado um token para o email informado.
      * 
      * @param usuarioDto usuário que será criado.
@@ -107,28 +111,31 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
      * Caso a resposta seja sim, será lançado uma exceção. Se não, o token é validado e o usuário ativado.
      * 
      * @param token token de validação.
-     * @exception IllegalStateException é lançada caso o token não seja encontrado.
+     * @exception ObjectNotFoundException é lançada caso o token não seja encontrado.
      * @return uma mensagem de confirmação, caso o token seja válido.
      */
-    @Transactional
     @Override
     public String confirmarToken(String token) {
-        TokenEmail tokenEmail = tokenEmailServico.findByToken(token).orElseThrow(() -> new IllegalStateException("Token não encontrado"));
+        try {
+            return executorService.submit(() -> {
+                TokenEmail tokenEmail = tokenEmailServico.findByToken(token).orElseThrow(() -> new ObjectNotFoundException("Token não encontrado"));
+                if (tokenEmail.getConfirmadoAs() == null) {
+                    LocalDateTime expiradoAs = tokenEmail.getExpiradoAs();
 
-        if (tokenEmail.getConfirmadoAs() != null) {
-            throw new IllegalStateException("Email já confirmado");
-        }
+                    if (expiradoAs.isBefore(LocalDateTime.now())) {
+                        tokenEmailServico.deleteTokenByUsuarioId(tokenEmail.getUsuario().getId());
+                        enviarToken(tokenEmail.getUsuario());
+                        return "Token expirado. Um novo token foi enviado para o email cadastrado";
+                    }
 
-        LocalDateTime expiradoAs = tokenEmail.getExpiradoAs();
-
-        if (expiradoAs.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("Token expirado");
-        }
-
-        tokenEmailServico.setConfirmadoAs(token);
-        ativarUsuario(tokenEmail.getUsuario().getEmail());
-
-        return "Email validado com sucesso";
+                    tokenEmailServico.setConfirmadoAs(token);
+                    ativarUsuario(tokenEmail.getUsuario().getEmail());
+                }
+                return "Email validado com sucesso";
+            }).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new ObjectNotFoundException(e.getCause().getMessage());
+        } 
     }
 
     /**
@@ -138,10 +145,10 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
      * @exception ValidationException é lançada caso o email já esteja cadastrado.
      */
     private synchronized void existsByEmail(Usuario usuario) {
-        boolean existeEmail = repositorio.existsByEmail(usuario.getEmail());        
-        if (existeEmail) {          
+        boolean existeEmail = repositorio.existsByEmail(usuario.getEmail());
+        if (existeEmail) {
             throw new ValidationException("Email já cadastrado");
-        } 
+        }
     }
 
     /**
@@ -195,5 +202,10 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
      */
     private int ativarUsuario(String email) {
         return repositorio.ativarUsuario(email);
+    }
+
+    @PreDestroy
+    private static void encerrarExecutorService() {
+        executorService.shutdown();
     }
 }

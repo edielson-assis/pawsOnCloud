@@ -30,4 +30,10 @@ public interface TokenEmailServico {
      * @return número do registro afetado pela atualização no banco de dados.
      */
     int setConfirmadoAs(String token);
+
+    /**
+     * Deleta o token associado ao usuário.
+     * @param id id do usuário associado ao token.
+     */
+    void deleteTokenByUsuarioId(Long id);
 }

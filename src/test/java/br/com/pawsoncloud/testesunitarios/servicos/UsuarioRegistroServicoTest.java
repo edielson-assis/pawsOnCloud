@@ -53,17 +53,16 @@ class UsuarioRegistroServicoTest {
     @Mock
     private EmailServico emailServico;
 
-    @Mock
-    private EnderecoDto endereco;
-
     @InjectMocks
     private UsuarioRegistroServicoImpl servico;
 
     private Usuario usuario;
     private UsuarioDto usuarioDto;
+    private EnderecoDto endereco;
 
     @BeforeEach
     void setup() {
+        endereco = new EnderecoDto("Rua dos sonhos, 1000", null, "Salvador", "BA");
         usuarioDto = new UsuarioDto("Edielson", "edielson@email.com", "123456", LocalDate.of(1987, 04, 23), "411.727.360-49", "(71) 98888-7777", endereco);
         usuario = DadosUsuario.getUsuario(usuarioDto);
         autenticaUsuario(usuario);
@@ -193,7 +192,7 @@ class UsuarioRegistroServicoTest {
         given(tokenEmailServico.findByToken(anyString())).willReturn(Optional.of(tokenEmail));
 
         // When / Act
-        String tokenConfirmacao = servico.confirmarToken(anyString());
+        String tokenConfirmacao = servico.confirmarToken(token());
 
         // Then / Assert
         verify(tokenEmailServico, times(1)).findByToken(anyString());
@@ -201,38 +200,40 @@ class UsuarioRegistroServicoTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma IllegalStateException se o email já tiver sido validado")
-    void testDeveRetornarUmaIllegalStateExceptionSeOEmailJaEstiverSidoValidado() {
+    @DisplayName("Deve retornar uma ObjectNotFoundException se o token nao for encontrado")
+    void testDeveRetornarUmaObjectNotFoundExceptionSeOTokenNaoForEncontrado() {
         
         // Given / Arrange
         TokenEmail tokenEmail = new TokenEmail(token(), LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), usuario);
         
         given(tokenEmailServico.findByToken(anyString())).willReturn(Optional.of(tokenEmail)); 
-        given(repositorio.ativarUsuario(anyString())).willThrow(new IllegalStateException("Email já confirmado"));
+        given(repositorio.ativarUsuario(anyString())).willThrow(new ObjectNotFoundException("Token não encontrado"));
 
         // When / Act
-        IllegalStateException illegalStateException = assertThrows(IllegalStateException.class, () -> servico.confirmarToken(token()));
+        ObjectNotFoundException tokenException = assertThrows(ObjectNotFoundException.class, () -> servico.confirmarToken(token()));
 
         // Then / Assert
         verify(tokenEmailServico, times(1)).findByToken(anyString());
-        assertEquals("Email já confirmado", illegalStateException.getMessage());     
+        assertEquals("Token não encontrado", tokenException.getMessage());     
     }
 
     @Test
-    @DisplayName("Deve retornar uma IllegalStateException se o token ja estiver expirado")
-    void testDeveRetornarUmaIllegalStateExceptionSeOTokenJaEstiverExpirado() {
+    @DisplayName("Deve retornar token expirado se o token ja estiver expirado")
+    void testDeveRetornarTokenExpiradoSeOTokenJaEstiverExpirado() {
 
         // Given / Arrenge
         TokenEmail tokenEmail = new TokenEmail(token(), LocalDateTime.now(), LocalDateTime.now().minusMinutes(15), usuario);
         
         given(tokenEmailServico.findByToken(anyString())).willReturn(Optional.of(tokenEmail));
+        willDoNothing().given(tokenEmailServico).deleteTokenByUsuarioId(usuario.getId());
 
         // When / Act
-        IllegalStateException illegalStateException = assertThrows(IllegalStateException.class, () -> servico.confirmarToken(token()));
+        String tokenConfirmacao = servico.confirmarToken(token());
 
         // Then / Assert
         verify(tokenEmailServico, times(1)).findByToken(anyString());
-        assertEquals("Token expirado", illegalStateException.getMessage());    
+        verify(tokenEmailServico, times(1)).deleteTokenByUsuarioId(usuario.getId());
+        assertEquals("Token expirado. Um novo token foi enviado para o email cadastrado", tokenConfirmacao);     
     }
 
     private String token() {

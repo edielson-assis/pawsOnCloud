@@ -50,5 +50,15 @@ public class TokenEmailServicoImpl implements TokenEmailServico {
     @Override
     public int setConfirmadoAs(String token) {
         return repositorio.updateConfirmadoAs(token, LocalDateTime.now());
+    }
+
+    /**
+     * Deleta o token associado ao usuário.
+     * 
+     * @param id id do usuário associado ao token que será removido.
+     */
+    @Override
+    public void deleteTokenByUsuarioId(Long id) {
+        repositorio.deletarTokenNaoConfirmadosPorUsuario(id);
     }   
 }
