@@ -85,7 +85,7 @@ git clone git@github.com:edielson-assis/pawsOnCloud.git
 ``` 
 Crie uma base de dados no MySQL com o nome **projeto_integrador**. Não é necessário criar as tabelas.
 
-Em seguida, abra o projeto na IDE de sua preferência, atualize o arquivo **application.properties** com os dados da base de dados criada e execute-o a partir do método **main**.
+Em seguida, abra o projeto na IDE de sua preferência, atualize o arquivo **application-dev.properties** com os dados da base de dados criada. Em seguida, atualize as configurações do servidor SMPT. No campo username coloque o seu e-mail e no campo password a sua senha, essa senha é a senha de aplicativo da sua conta do Gmail. Caso não saiba como configurá-la, basta acessar esse <a href="https://www.youtube.com/watch?v=nFbZLX2U-5k&t=6s">tutorial</a>. Depois disso, basta executar a aplicação a partir do método **main**.
 
 Após executar o projeto, abra o seu navegador de internet e, na barra de endereço, digite o seguinte comando:
 
@@ -93,6 +93,8 @@ Após executar o projeto, abra o seu navegador de internet e, na barra de endere
 http://localhost:8080/swagger-ui/index.html
 ```
 Agora é só testar as funcionalidades do projeto. Não se esqueça de se registrar e fazer login para se autenticar na plataforma. Toda comunicação entre os endpoints é feita via token JWT.
+
+Obs: caso queira rodar os testes unitários, é necessário ter o Docker instalado para rodar os testes de repositório.
 
 ## Linguagens, dependencias e libs utilizadas :books:
 
@@ -109,13 +111,14 @@ Agora é só testar as funcionalidades do projeto. Não se esqueça de se regist
 - [Java JWT](https://mvnrepository.com/artifact/com.auth0/java-jwt/4.4.0)
 - [Swagger](https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui/2.3.0)
 - [Spring Mail](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail/3.2.1)
+- [TestContainers](https://mvnrepository.com/artifact/org.testcontainers/mysql/1.19.5)
 
 ## :gear: Atualizações futuras
 ### Back End
 - [x] Escrever testes unitários.
 - [ ] Escrever testes de integração.
 - [ ] Alterar o link de validação para redirecionar os usuários para uma página web.
-- [ ] Criar um método para deletar ou atualizar o token de validação, caso o usuário realize o cadastro, mas não valide o email.
+- [x] Criar um método para deletar ou atualizar o token de validação, caso o usuário realize o cadastro, mas não valide o email.
 - [ ] Implementar as funcionalidades para a página do blog.
 - [ ] Implementar as funcionalidades para a página das ongs.
 - [ ] Após finalizar a documentação, remover os comentários para deixar o código mais limpo.
