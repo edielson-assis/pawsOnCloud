@@ -86,9 +86,9 @@ public class UsuarioRegistroControle {
     @Operation(security = {@SecurityRequirement(name = SECURITY_SCHEME_KEY)})
     @Transactional
     @PutMapping 
-    public ResponseEntity<Void> update(@Valid @RequestBody UsuarioUpdateDto usuarioDto) {
-        servico.update(usuarioDto);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<UsuarioFullRespDto> update(@Valid @RequestBody UsuarioUpdateDto usuarioDto) {
+        Usuario usuario = servico.update(usuarioDto);
+        return ResponseEntity.ok().body(new UsuarioFullRespDto(usuario));
     }
 
     /**
