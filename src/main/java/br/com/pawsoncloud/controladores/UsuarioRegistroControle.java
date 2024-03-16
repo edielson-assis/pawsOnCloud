@@ -81,7 +81,7 @@ public class UsuarioRegistroControle {
      * Atualiza os dados do usuário.
      * 
      * @param usuarioDto DTO contendo as novas informações do usuário.
-     * @return Código http 204
+     * @return Um json com os dados do usuário e o código http 200
      */
     @Operation(security = {@SecurityRequirement(name = SECURITY_SCHEME_KEY)})
     @Transactional

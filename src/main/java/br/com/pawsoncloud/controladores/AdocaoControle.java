@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.pawsoncloud.dtos.AdocaoDto;
 import br.com.pawsoncloud.dtos.AdocaoRespDto;
+import br.com.pawsoncloud.dtos.AdocaoResponseDto;
 import br.com.pawsoncloud.dtos.AdocaoUpdateDto;
 import br.com.pawsoncloud.entidades.Adocao;
 import br.com.pawsoncloud.servicos.AdocaoServico;
@@ -60,9 +61,9 @@ public class AdocaoControle {
      * @return Um json com todas as adoções e o código http 200
      */
     @GetMapping
-    public ResponseEntity<List<AdocaoRespDto>> findByCpf() {
+    public ResponseEntity<List<AdocaoResponseDto>> findByCpf() {
         var adocoes = servico.findByCpf();
-        var adocoesDto = adocoes.stream().map(AdocaoRespDto::new).collect(Collectors.toList());
+        var adocoesDto = adocoes.stream().map(AdocaoResponseDto::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(adocoesDto);
     }
 

@@ -107,8 +107,8 @@ public class UsuarioRegistroServicoImpl implements UsuarioRegistroServico {
     /**
      * Através do método findByToken, da classe {@link TokenEmailServico}, é verificado se o token exixste no banco de dadods.
      * Se sim, ele é atribuido à um objeto do tipo {@link TokenEmail}, se não, é lançado uma exceção.
-     * Por meio do método confirmarToken, é verificado se o email já foi confirmado, se o token está expirado.
-     * Caso a resposta seja sim, será lançado uma exceção. Se não, o token é validado e o usuário ativado.
+     * Por meio do método confirmarToken, é verificado se o token está expirado.
+     * Caso a resposta seja sim, o token expirado é deletado e um novo token enviado. Se não, o token é validado e o usuário ativado.
      * 
      * @param token token de validação.
      * @exception ObjectNotFoundException é lançada caso o token não seja encontrado.
